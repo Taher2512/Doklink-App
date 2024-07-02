@@ -1,41 +1,17 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {StatusBar, StyleSheet} from 'react-native';
+import Navigation from './src/navigation';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    // backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    backgroundColor: Colors.darker,
-  };
-
   return (
-    <View>
+    <>
       <StatusBar
-        // barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        barStyle={'light-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
       />
-      <View>
-        <Text style={{color: '#000'}}>Hi</Text>
-      </View>
-    </View>
+      <Navigation />
+    </>
   );
 }
 
