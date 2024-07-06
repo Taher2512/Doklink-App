@@ -1,14 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const SomeComponent = () => {
+const AnimatedStepsModal = () => {
   return (
     <View>
-      <Text>SomeComponent</Text>
+      <Text>AnimatedStepsModal</Text>
     </View>
   );
 };
 
-export default SomeComponent;
+export default AnimatedStepsModal;
 
 const styles = StyleSheet.create({});
