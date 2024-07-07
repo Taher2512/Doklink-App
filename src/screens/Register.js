@@ -1,9 +1,12 @@
+/*eslint-disable*/
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-
+import { useTheme } from 'react-native-paper';
+const th=useTheme()
 const Register = () => {
+  const theme = useTheme();
   return (
-    <View>
+    <View  >
       <Text>Register</Text>
     </View>
   );
@@ -11,4 +14,6 @@ const Register = () => {
 
 export default Register;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  
+});
