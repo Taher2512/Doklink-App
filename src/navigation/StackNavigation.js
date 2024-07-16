@@ -8,6 +8,7 @@ import {useTheme} from 'react-native-paper';
 import Register from '../screens/Register';
 import Login from '../screens/Login';
 import BottomTabNavigation from './BottomTabNavigation';
+import SignUp from '../screens/SignUp';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,11 @@ const StackNavigation = () => {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
           options={{headerShown: false}}
         />
         <Stack.Screen

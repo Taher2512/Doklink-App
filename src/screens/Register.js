@@ -3,13 +3,12 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import OnboardingModal from '../components/OnboardingModal';
-import Signup from './Signup';
+import SignUp from './SignUp';
 
 const Register = () => {
   return (
-    <View style={{flex:1}}>
-      {/* <OnboardingModal /> */}
-      <Signup/>
+    <View style={{flex: 1}}>
+      <OnboardingModal />
     </View>
   );
 };
