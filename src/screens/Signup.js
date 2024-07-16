@@ -5,7 +5,7 @@ import { TextInput, useTheme } from 'react-native-paper'
 import CheckBox from '../components/CheckBox'
 import { Link } from '@react-navigation/native'
 
-export default function Login() {
+export default function Signup() {
     const theme=useTheme()
     const dimension=Dimensions.get('window')
     const [checked, setchecked] = useState(false)
@@ -23,7 +23,7 @@ export default function Login() {
       </View>
       <View style={{height:"100%",width:'100%',justifyContent:'flex-end'}}>
       <View  style={{height:dimension.height-visibleHeight,alignItems:'center',justifyContent:'space-evenly',width:'100%',padding:20}} >
-      <Text style={{color:'black',fontWeight:"bold",fontSize:28}}>Sign In</Text>
+      <Text style={{color:'black',fontWeight:"bold",fontSize:28}}>Sign Up for free</Text>
         <View style={{width:"100%",gap:15}}>
         <TextInput
           style={{width:'100%',height:50,backgroundColor:'white',borderRadius:10,borderColor:theme.colors.outline,color:'black'}}
@@ -42,7 +42,7 @@ export default function Login() {
         </View>
         </View>
         <TouchableOpacity style={{height:60,width:"100%",borderRadius:15,alignItems:'center',justifyContent:'center',borderColor:"#20d0ce",borderWidth:3,elevation:4,backgroundColor:'white'}}>
-          <Text style={{fontSize:24,color:'#20d0ce',fontWeight:'normal'}}>Sign In</Text>
+          <Text style={{fontSize:24,color:'#20d0ce',fontWeight:'normal'}}>Sign Up</Text>
         </TouchableOpacity>
         <View style={{width:"100%",gap:10,alignItems:'center',justifyContent:'center'}}>
         <View style={{height:1.5,width:'100%',backgroundColor:'black'}}/>
@@ -52,7 +52,7 @@ export default function Login() {
           <Image style={{height:45,width:45}} source={require('../assets/logos/googleLogo.png')}/>
           <Text style={{color:theme.colors.textColor,fontSize:22}}>Google</Text>
         </TouchableOpacity>
-        <Text style={{color:theme.colors.tertiary,fontSize:16}}>Already have an account?<Link style={{color:'#20d0ce'}} to={'/Register'}> Sign Up</Link></Text>
+        <Text style={{color:theme.colors.tertiary,fontSize:16}}>Already have an account?<Link style={{color:'#20d0ce'}} to={'/Login'}> Sign In</Link></Text>
       </View>
 
       </View>
@@ -60,4 +60,3 @@ export default function Login() {
    </View>
   )
 }
-

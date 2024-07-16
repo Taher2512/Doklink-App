@@ -15,6 +15,7 @@ const theme = {
     surfaceVariant: '#fff',
     onSurfaceVariant: '#1E40AF',
     outline: '#fff',
+    textColor:'black'
   },
 };
 

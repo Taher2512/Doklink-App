@@ -1,17 +1,21 @@
+/*eslint-disable*/
 import React from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet,KeyboardAvoidingView, Platform} from 'react-native';
 import Navigation from './src/navigation';
 
 function App() {
   return (
-    <>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    style={{ flex: 1 }}
+    >
+    
       <StatusBar
-        barStyle="light-content"
         backgroundColor="transparent"
         translucent
       />
       <Navigation />
-    </>
+    </KeyboardAvoidingView>
   );
 }
 
