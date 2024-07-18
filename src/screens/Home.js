@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Image, Text} from 'react-native';
-import {Card, Button, Searchbar, useTheme} from 'react-native-paper';
+import {View, FlatList, Image, Text, Pressable} from 'react-native';
+import {
+  Card,
+  Button,
+  Searchbar,
+  useTheme,
+  IconButton,
+  TouchableRipple,
+} from 'react-native-paper';
 import {sampleHospitals} from '../utils/sampleData';
 import Geolocation from '@react-native-community/geolocation';
 import LinearGradient from 'react-native-linear-gradient';
@@ -34,16 +41,41 @@ const Home = () => {
   return (
     <View className="flex-1 bg-gray-100 ">
       <View className="p-4">
-        <View className="flex-row items-center mb-4">
-          <Image
-            source={require('../assets/logos/logo-blue.png')}
-            className="h-16 w-16"
-          />
-          <Text
-            className="font-bold mb-2 text-2xl"
-            style={{color: theme.colors.secondary}}>
-            DOKLINK
-          </Text>
+        <View className="flex-row justify-between items-center mb-4">
+          <View className="flex-row items-center">
+            <Image
+              source={require('../assets/logos/logo-blue.png')}
+              className="h-16 w-16"
+            />
+            <Text
+              className="font-bold mb-2 text-2xl"
+              style={{color: theme.colors.secondary}}>
+              DOKLINK
+            </Text>
+          </View>
+          <View className="flex-row">
+            <IconButton
+              icon="calendar-month"
+              mode="contained"
+              size={23}
+              iconColor={theme.colors.secondary}
+              containerColor={theme.colors.tertiary}
+              style={{
+                borderWidth: 1,
+                borderColor: theme.colors.secondary,
+              }}
+              onPress={() => console.log('Pressed')}
+            />
+            <IconButton
+              icon="bell-ring"
+              mode="contained"
+              size={23}
+              iconColor={theme.colors.secondary}
+              containerColor={theme.colors.tertiary}
+              style={{borderWidth: 1, borderColor: theme.colors.secondary}}
+              onPress={() => console.log('Pressed')}
+            />
+          </View>
         </View>
         <Searchbar
           placeholder="Search location"
@@ -82,6 +114,63 @@ const Home = () => {
             Your EXCELLENT care{'\n'} is our SPECIALITY
           </Text>
         </LinearGradient>
+        <Text className="text-[#192f6a] mt-6 font-bold text-2xl">
+          Our Services
+        </Text>
+        <View className="flex-row justify-around mt-4">
+          <Pressable
+            onPress={() => console.log('hi')}
+            className="justify-center items-center">
+            <LinearGradient
+              colors={['#4c669f', '#3b5998', '#192f6a']}
+              className="h-28 w-40 rounded-lg justify-center items-center"
+              style={{
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 10,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.5,
+                elevation: 15,
+              }}>
+              <Image
+                source={require('../assets/icons/bed-booking-banner.png')}
+                className="h-28 w-28 absolute"
+                style={{resizeMode: 'contain'}}
+              />
+            </LinearGradient>
+            <Text className="text-[#192f6a] mt-1 font-semibold text-base">
+              Bed Booking
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => console.log('hi2')}
+            className="justify-center items-center">
+            <LinearGradient
+              colors={['#4c669f', '#3b5998', '#192f6a']}
+              className="h-28 w-40 rounded-lg justify-center items-center"
+              style={{
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 10,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.5,
+                elevation: 15,
+              }}>
+              <Image
+                source={require('../assets/icons/doctor-appointment-banner.png')}
+                className="h-24 w-24 absolute"
+                style={{resizeMode: 'contain'}}
+              />
+            </LinearGradient>
+            <Text className="text-[#192f6a] mt-1 font-semibold text-base">
+              Doctor Appointment
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
