@@ -12,6 +12,7 @@ export default function Login() {
   const visibleHeight = dimension.width / Math.sqrt(2);
   const [email, setemail] = useState('')
   const navigation=useNavigation()
+  
   return (
     <View
       style={{

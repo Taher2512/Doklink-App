@@ -5,8 +5,7 @@ import { useTheme } from 'react-native-paper';
 import { Keyboard, KeyboardEvent } from 'react-native';
 let width=Dimensions.get('window').width 
 width=(width-80)/4
-const FourDigitVerification = () => {
-  const [code, setCode] = useState(['', '', '', '']);
+const FourDigitVerification = ({code,setCode}) => {
   const inputs = useRef([]);
  const [focusedBox, setfocusedBox] = useState(-1)
  const theme=useTheme()

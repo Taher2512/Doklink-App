@@ -1,10 +1,13 @@
 /*eslint-disable*/
-import React, {useState} from 'react';
-import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {Alert, Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import CheckBox from '../components/CheckBox';
 import {Link, useNavigation} from '@react-navigation/native';
-
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import axios from 'axios';
+import { BACKEND_URL } from '../utils/credentails';
+import firestore from '@react-native-firebase/firestore';
 export default function SignUp() {
   const theme = useTheme();
   const dimension = Dimensions.get('window');
@@ -12,6 +15,27 @@ export default function SignUp() {
   const visibleHeight = dimension.width / Math.sqrt(2);
   const [email, setemail] = useState('');
   const navigation=useNavigation()
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:'607444176798-ig7h7gvj34qln9nn4171iqvnqmmpck4k.apps.googleusercontent.com'
+    })
+    console.log("configured")
+  }, [])
+  const googleSignin=async()=>{
+    try{
+        await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog:true})
+        await GoogleSignin.signOut()
+        const {user}=await GoogleSignin.signIn()
+       console.log(user)
+        return user
+      }
+   
+   catch(err){
+    console.log(err)
+         
+   }
+    
+}
   return (
     <View
       style={{
@@ -97,7 +121,16 @@ export default function SignUp() {
             </View>
           </View>
           <TouchableOpacity
-          onPress={()=>{
+          onPress={async()=>{
+            axios.post(BACKEND_URL+'/generateOtp',{email}).then(async(res)=>{
+                if(res.data.error){
+                  Alert.alert("Error",res.data.message)
+                }
+                else{
+                  await firestore().collection('otp').add({email,otp:res.data.otp,expiresIn:Date.now()+9*60*1000,used:0})
+                  navigation.navigate('otpVerification',{email,otp:res.data.otp})
+                }
+            })
             navigation.navigate('otpVerification',{email})
           }}
             style={{
@@ -131,6 +164,7 @@ export default function SignUp() {
             </Text>
           </View>
           <TouchableOpacity
+          onPress={googleSignin}
             style={{
               alignItems: 'center',
               justifyContent: 'center',

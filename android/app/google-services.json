@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "607444176798",
+    "project_id": "doklink-7077c",
+    "storage_bucket": "doklink-7077c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607444176798:android:aae6141444bc419b74908f",
+        "android_client_info": {
+          "package_name": "com.doklink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607444176798-v1lurq3abhdtsrlq2t0pdpc3160nt1vj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doklink",
+            "certificate_hash": "4364b939eb8da006fc9d7955adb638c76263fd4c"
+          }
+        },
+        {
+          "client_id": "607444176798-ig7h7gvj34qln9nn4171iqvnqmmpck4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyr_7T6-T4sM6z3JdBeP9q8ShoPS68uiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607444176798-ig7h7gvj34qln9nn4171iqvnqmmpck4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,19 +1,66 @@
 /*eslint-disable*/
 /*eslint-disable*/
-import React, {useState} from 'react';
-import {Dimensions, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {Alert, Dimensions, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import CheckBox from '../components/CheckBox';
 import {Link, useNavigation} from '@react-navigation/native';
 import FourDigitVerification from '../components/FourDigitVerification';
-
-export default function OtpVerification() {
+import firestore from '@react-native-firebase/firestore';
+const formatNumber = number => `0${number}`.slice(-2);
+const getRemaining = (time) => {
+  const mins = Math.floor(time / 60);
+  const secs = time - mins * 60;
+  return { mins: formatNumber(mins), secs: formatNumber(secs) };
+}
+export default function OtpVerification({navigation,route}) {
   const theme = useTheme();
   const dimension = Dimensions.get('window');
+  const [remainingSecs, setRemainingSecs] = useState(9*60);
+  const [isActive, setIsActive] = useState(true);
+  const { mins, secs } = getRemaining(remainingSecs);
   const [checked, setchecked] = useState(false);
   const visibleHeight = dimension.width / Math.sqrt(2);
-  const [phoneno, setphoneno] = useState('');
-  const navigation=useNavigation()
+  const [code, setCode] = useState(['', '', '', '']);
+
+  toggle = () => {
+    setIsActive(!isActive);
+  }
+ const verify=()=>{
+   let wholecode=code.join('')
+    if(wholecode.length<4){
+    Alert.alert("Please enter the valid code")
+    }
+    else{
+      firestore().collection('otp').where('email',"==",route.params.email).where('otp','==',wholecode).get().then((snapshot)=>{
+        if(snapshot.docs.length>0){
+          if(snapshot.docs[0].data().used){
+           Alert.alert("The code has been used")
+          }
+          else if(snapshot.docs[0].data().expiresIn<Date.now()){
+            Alert.alert({message:'Otp expired'})
+         }
+         else{
+          firestore().collection('otp').doc(snapshot.docs[0].id).update({used:1})
+          navigation.navigate('BottomTabNavigation')
+         }
+        }
+      })
+    }
+ }
+  useEffect(() => {
+    let interval = null;
+    setIsActive(true)
+    if (remainingSecs>=0) {
+      interval = setInterval(() => {
+        console.log(mins,secs)
+        setRemainingSecs(remainingSecs => remainingSecs-1);
+      }, 1000);
+    } else if ( remainingSecs == 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, remainingSecs]);
   return (
     <ScrollView contentContainerStyle={{flex:1}} >
     <View
@@ -74,12 +121,16 @@ export default function OtpVerification() {
           </Text>
           <View style={{width:"100%",alignItems:"center",justifyContent:"center",gap:10}}>
              <Text style={{color:theme.colors.textColor,fontSize:16,textAlign:'center'}}>We have sent a verification code to your email</Text>
-              <FourDigitVerification/>
+              <FourDigitVerification
+              code={code}
+              setCode={setCode}
+              />
+              <View style={{width:'100%',alignItems:'flex-start'}}>
+              <Text style={{color:theme.colors.textColor,fontSize:16,textAlign:'center'}}>The code expires in {mins}:{secs}</Text>
+              </View>
             </View>
           <TouchableOpacity
-          onPress={()=>{
-            
-          }}
+          onPress={verify}
             style={{
               height: 60,
               width: '100%',
