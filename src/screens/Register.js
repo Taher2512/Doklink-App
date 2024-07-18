@@ -3,7 +3,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import OnboardingModal from '../components/OnboardingModal';
-import SignUp from './SignUp';
+import SignUp from './Signup';
 
 const Register = () => {
   return (

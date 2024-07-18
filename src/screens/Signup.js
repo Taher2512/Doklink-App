@@ -3,14 +3,15 @@ import React, {useState} from 'react';
 import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import CheckBox from '../components/CheckBox';
-import {Link} from '@react-navigation/native';
+import {Link, useNavigation} from '@react-navigation/native';
 
 export default function SignUp() {
   const theme = useTheme();
   const dimension = Dimensions.get('window');
   const [checked, setchecked] = useState(false);
   const visibleHeight = dimension.width / Math.sqrt(2);
-  const [phoneno, setphoneno] = useState('');
+  const [email, setemail] = useState('');
+  const navigation=useNavigation()
   return (
     <View
       style={{
@@ -35,14 +36,15 @@ export default function SignUp() {
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
             top: -visibleHeight,
+            padding:30
           }}>
           <Image
             style={{
               transform: [
                 {rotate: '-45deg'},
-                {translateY: -45},
-                {translateX: 15},
               ],
+              height:130,
+              width:120
             }}
             source={require('../assets/logos/mainLogo.png')}
           />
@@ -70,14 +72,15 @@ export default function SignUp() {
                 borderColor: theme.colors.outline,
                 color: 'black',
               }}
-              label={'Enter your phone no.'}
+              label={'Enter your email'}
               mode="outlined"
-              keyboardType="phone-pad"
+              keyboardType="email-address"
               outlineColor="black"
               activeOutlineColor={theme.colors.secondary}
               textColor="black"
               placeholderTextColor={'black'}
-              value={phoneno}
+              value={email}
+              onChangeText={(text) => setemail(text)}
             />
             <View
               style={{
@@ -94,6 +97,9 @@ export default function SignUp() {
             </View>
           </View>
           <TouchableOpacity
+          onPress={()=>{
+            navigation.navigate('otpVerification',{email})
+          }}
             style={{
               height: 60,
               width: '100%',
@@ -147,7 +153,7 @@ export default function SignUp() {
             </Text>
           </TouchableOpacity>
           <Text style={{color: theme.colors.tertiary, fontSize: 16}}>
-            Already have an account?
+            Don't have an account?
             <Link style={{color: '#20d0ce'}} to={'/Login'}>
               {' '}
               Sign In

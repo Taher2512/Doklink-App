@@ -1,3 +1,4 @@
+/*eslint-disable*/ 
 import React from 'react';
 import {
   createStackNavigator,
@@ -8,7 +9,8 @@ import {useTheme} from 'react-native-paper';
 import Register from '../screens/Register';
 import Login from '../screens/Login';
 import BottomTabNavigation from './BottomTabNavigation';
-import SignUp from '../screens/SignUp';
+import SignUp from '../screens/Signup';
+import OtpVerification from '../screens/OtpVerification';
 
 const Stack = createStackNavigator();
 
@@ -42,7 +44,12 @@ const StackNavigation = () => {
           name="BottomTabNavigation"
           component={BottomTabNavigation}
         />
+         <Stack.Screen
+          name='otpVerification'
+          component={OtpVerification}
+        />
       </Stack.Navigator>
+     
     </NavigationContainer>
   );
 };
