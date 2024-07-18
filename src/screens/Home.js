@@ -1,15 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Image} from 'react-native';
-import {
-  Text,
-  Card,
-  Button,
-  Searchbar,
-  IconButton,
-  useTheme,
-} from 'react-native-paper';
+import {View, FlatList, Image, Text} from 'react-native';
+import {Card, Button, Searchbar, useTheme} from 'react-native-paper';
 import {sampleHospitals} from '../utils/sampleData';
 import Geolocation from '@react-native-community/geolocation';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,31 +17,6 @@ const Home = () => {
     // console.log('Searching for:', searchQuery);
     // In a real app, you would filter the hospitals based on the search query
   };
-
-  const renderHospitalCard = ({item}) => (
-    <Card className="m-2">
-      <Card.Cover source={{uri: item.image}} />
-      <Card.Content>
-        <Text variant="titleLarge" className="font-bold">
-          {item.name}
-        </Text>
-        <Text variant="bodyMedium" className="text-gray-600">
-          {item.address}
-        </Text>
-        <Text variant="bodyMedium" className="text-green-600">
-          {item.availableBeds} beds available
-        </Text>
-        <Text variant="bodyMedium" className="text-blue-600">
-          {item.distance} away
-        </Text>
-      </Card.Content>
-      <Card.Actions>
-        <Button onPress={() => console.log('Book bed at', item.name)}>
-          Book Bed
-        </Button>
-      </Card.Actions>
-    </Card>
-  );
 
   useEffect(() => {
     // Get current location when component mounts
@@ -63,11 +32,19 @@ const Home = () => {
   }, []);
 
   return (
-    <View className="flex-1 bg-gray-100">
-      <View className="p-4 bg-white shadow-md">
-        <Text variant="headlineMedium" className="font-bold mb-2">
-          Find Nearby Hospitals
-        </Text>
+    <View className="flex-1 bg-gray-100 ">
+      <View className="p-4">
+        <View className="flex-row items-center mb-4">
+          <Image
+            source={require('../assets/logos/logo-blue.png')}
+            className="h-16 w-16"
+          />
+          <Text
+            className="font-bold mb-2 text-2xl"
+            style={{color: theme.colors.secondary}}>
+            DOKLINK
+          </Text>
+        </View>
         <Searchbar
           placeholder="Search location"
           icon={'map-marker-radius'}
@@ -76,19 +53,36 @@ const Home = () => {
           onSubmitEditing={handleSearch}
           cursorColor={theme.colors.secondary}
           className="mb-2"
+          style={{borderColor: theme.colors.secondary, borderWidth: 2}}
         />
         <Text variant="bodyMedium" className="text-gray-600">
-          Current location:{' '}
-          {currentLocation ? currentLocation.latitude.toFixed(4) : 'N/A'},{' '}
-          {currentLocation ? currentLocation.longitude.toFixed(4) : 'N/A'}
+          {/* Current location:{' '} */}
+          {/* {currentLocation ? currentLocation.latitude.toFixed(4) : 'N/A'},{' '}
+          {currentLocation ? currentLocation.longitude.toFixed(4) : 'N/A'} */}
+          Current location: 123 Main St., Kolkata - 700016
         </Text>
+        <LinearGradient
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+          className="flex-row justify-end items-center w-full h-32 mt-10 rounded-lg"
+          style={{
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 10,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.5,
+            elevation: 15,
+          }}>
+          <Image
+            source={require('../assets/icons/banner-1.png')}
+            className="absolute left-4 h-36 w-36 -top-4"
+          />
+          <Text className="text-white w-1/2 font-bold text-lg mr-3 text-left">
+            Your EXCELLENT care{'\n'} is our SPECIALITY
+          </Text>
+        </LinearGradient>
       </View>
-      <FlatList
-        data={nearbyHospitals}
-        renderItem={renderHospitalCard}
-        keyExtractor={item => item.id}
-        contentContainerStyle={{padding: 8}}
-      />
     </View>
   );
 };
