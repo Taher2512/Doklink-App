@@ -82,21 +82,12 @@ const OnboardingModal = () => {
       : FadeInLeft.duration(350);
   };
 
-  const goToLogin = () => {
+  const goToSignIn = () => {
     hideModal();
-    navigation.navigate('Login');
+    navigation.navigate('SignIn');
     navigation.reset({
       index: 0,
-      routes: [{name: 'Login'}],
-    });
-  };
-
-  const goToSignup = () => {
-    hideModal();
-    navigation.navigate('SignUp');
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'SignUp'}],
+      routes: [{name: 'SignIn'}],
     });
   };
 
@@ -164,7 +155,7 @@ const OnboardingModal = () => {
             </Button>
             {currentStep === steps.length - 1 ? (
               <View>
-                {/* <Button
+                <Button
                   icon="login"
                   mode="outlined"
                   className="mt-11"
@@ -172,18 +163,18 @@ const OnboardingModal = () => {
                     flexDirection: 'row-reverse',
                   }}
                   labelStyle={{fontSize: 17}}
-                  onPress={goToSignup}>
+                  onPress={goToSignIn}>
                   LOGIN
-                </Button> */}
+                </Button>
                 <Button
                   icon="account"
                   mode="outlined"
-                  className="mt-11"
+                  className="mt-3"
                   contentStyle={{
                     flexDirection: 'row-reverse',
                   }}
                   labelStyle={{fontSize: 17}}
-                  onPress={goToSignup}>
+                  onPress={goToSignIn}>
                   SIGN UP
                 </Button>
               </View>

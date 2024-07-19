@@ -10,7 +10,7 @@ import Register from '../screens/Register';
 import Login from '../screens/Login';
 import BottomTabNavigation from './BottomTabNavigation';
 import OtpVerification from '../screens/OtpVerification';
-import SignUp from '../screens/Signup';
+import SignIn from '../screens/SignIn';
 
 const Stack = createStackNavigator();
 
@@ -31,13 +31,8 @@ const StackNavigation = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
+          name="SignIn"
+          component={SignIn}
           options={{headerShown: false}}
         />
         <Stack.Screen

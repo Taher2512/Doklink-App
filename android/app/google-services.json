@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "607444176798",
-    "project_id": "doklink-7077c",
-    "storage_bucket": "doklink-7077c.appspot.com"
+    "project_number": "739499928737",
+    "project_id": "doklink-caaa9",
+    "storage_bucket": "doklink-caaa9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:607444176798:android:aae6141444bc419b74908f",
+        "mobilesdk_app_id": "1:739499928737:android:223e54cdbd305e9fe2d4e0",
         "android_client_info": {
           "package_name": "com.doklink"
         }
       },
       "oauth_client": [
         {
-          "client_id": "607444176798-v1lurq3abhdtsrlq2t0pdpc3160nt1vj.apps.googleusercontent.com",
+          "client_id": "739499928737-2ijvbseo105v34d65dvah3nrgshbn3dj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.doklink",
-            "certificate_hash": "4364b939eb8da006fc9d7955adb638c76263fd4c"
+            "certificate_hash": "360efbf208c5445f762e9121ef68a321c27a60a7"
           }
         },
         {
-          "client_id": "607444176798-ig7h7gvj34qln9nn4171iqvnqmmpck4k.apps.googleusercontent.com",
+          "client_id": "739499928737-09n0m1jlfjleao777rn09bptpqedlhjf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCyr_7T6-T4sM6z3JdBeP9q8ShoPS68uiE"
+          "current_key": "AIzaSyCKJ-xq0btyuqgzE_6DK0kXWIdThsIUddc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "607444176798-ig7h7gvj34qln9nn4171iqvnqmmpck4k.apps.googleusercontent.com",
+              "client_id": "739499928737-09n0m1jlfjleao777rn09bptpqedlhjf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
