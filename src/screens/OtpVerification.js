@@ -2,11 +2,12 @@
 /*eslint-disable*/
 import React, {useState,useEffect} from 'react';
 import {Alert, Dimensions, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from 'react-native';
-import {TextInput, useTheme} from 'react-native-paper';
+import {TextInput, useTheme,Button} from 'react-native-paper';
 import CheckBox from '../components/CheckBox';
 import {Link, useNavigation} from '@react-navigation/native';
 import FourDigitVerification from '../components/FourDigitVerification';
 import firestore from '@react-native-firebase/firestore';
+import ShowMessage from '../components/dialogBox/ShowMessage';
 const formatNumber = number => `0${number}`.slice(-2);
 const getRemaining = (time) => {
   const mins = Math.floor(time / 60);
@@ -22,28 +23,45 @@ export default function OtpVerification({navigation,route}) {
   const [checked, setchecked] = useState(false);
   const visibleHeight = dimension.width / Math.sqrt(2);
   const [code, setCode] = useState(['', '', '', '']);
-
+const [loading, setloading] = useState(false)
   toggle = () => {
     setIsActive(!isActive);
   }
  const verify=()=>{
    let wholecode=code.join('')
     if(wholecode.length<4){
-    Alert.alert("Please enter the valid code")
+    ShowMessage({message:'Please enter the complete code',error:true})
     }
     else{
+      setloading(true)
       firestore().collection('otp').where('email',"==",route.params.email).where('otp','==',wholecode).get().then((snapshot)=>{
         if(snapshot.docs.length>0){
           if(snapshot.docs[0].data().used){
-           Alert.alert("The code has been used")
+            setloading(false)
+           ShowMessage({message:'Otp already used',error:true})
+           return
           }
           else if(snapshot.docs[0].data().expiresIn<Date.now()){
-            Alert.alert({message:'Otp expired'})
+            setloading(false)
+            ShowMessage({message:'Otp expired',error:true})
+            return
          }
          else{
           firestore().collection('otp').doc(snapshot.docs[0].id).update({used:1})
-          navigation.navigate('BottomTabNavigation')
+          firestore().collection('users').where("email","==",route.params.email).get().then((snapshot)=>{
+            if(snapshot.docs.length==0){
+              firestore().collection('users').add({email:route.params.email,googleLogin:0,date:Date.now()})
+            }
+            setloading(false)
+            setRemainingSecs(0)
+            navigation.navigate('BottomTabNavigation')
+          })
+          setloading(false)
          }
+        }
+        else{
+          setloading(false)
+          ShowMessage({message:'Invalid code',error:true})
         }
       })
     }
@@ -129,26 +147,16 @@ export default function OtpVerification({navigation,route}) {
               <Text style={{color:theme.colors.textColor,fontSize:16,textAlign:'center'}}>The code expires in {mins}:{secs}</Text>
               </View>
             </View>
-          <TouchableOpacity
-          onPress={verify}
-            style={{
-              height: 60,
-              width: '100%',
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderColor: '#20d0ce',
-              borderWidth: 3,
-              elevation: 4,
-              backgroundColor: 'white',
-            }}>
-            <Text
-              style={{fontSize: 24, color: '#20d0ce', fontWeight: 'normal'}}>
-              Verify
-            </Text>
-            
-          </TouchableOpacity>
-          
+         
+          <Button
+           style={{height:60,width:'100%',alignItems:'center',justifyContent:'center',borderRadius:15}} 
+           labelStyle={{fontSize:20,color:'white'}} 
+           buttonColor={theme.colors.secondary} 
+           onPress={verify}
+           loading={loading}
+           >
+             Verify
+          </Button>
         </View>
       </View>
       </View>

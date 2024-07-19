@@ -172,7 +172,7 @@ const OnboardingModal = () => {
                     flexDirection: 'row-reverse',
                   }}
                   labelStyle={{fontSize: 17}}
-                  onPress={goToLogin}>
+                  onPress={goToSignup}>
                   LOGIN
                 </Button>
                 <Button

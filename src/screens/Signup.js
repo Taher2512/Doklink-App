@@ -1,13 +1,14 @@
 /*eslint-disable*/
 import React, {useState,useEffect} from 'react';
 import {Alert, Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
-import {TextInput, useTheme} from 'react-native-paper';
+import {TextInput, useTheme,Button} from 'react-native-paper';
 import CheckBox from '../components/CheckBox';
 import {Link, useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import { BACKEND_URL } from '../utils/credentails';
 import firestore from '@react-native-firebase/firestore';
+import ShowMessage from '../components/dialogBox/ShowMessage';
 export default function SignUp() {
   const theme = useTheme();
   const dimension = Dimensions.get('window');
@@ -15,6 +16,9 @@ export default function SignUp() {
   const visibleHeight = dimension.width / Math.sqrt(2);
   const [email, setemail] = useState('');
   const navigation=useNavigation()
+  const [loading, setloading] = useState(false)
+  //google signin configuration to be done in ios folder as well
+
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:'607444176798-ig7h7gvj34qln9nn4171iqvnqmmpck4k.apps.googleusercontent.com'
@@ -26,6 +30,19 @@ export default function SignUp() {
         await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog:true})
         await GoogleSignin.signOut()
         const {user}=await GoogleSignin.signIn()
+       firestore().collection('users').where('email','==',user.email).get().then((snapshot)=>{
+        if(snapshot.docs.length>0&&!snapshot.docs[0].googleLogin){
+          ShowMessage({message:'This email is already registered with email',error:true})
+          return
+        }
+        else if(snapshot.docs.length==0){
+          firestore().collection('users').add({email:user.email,googleLogin:1,date:Date.now()})
+          navigation.navigate('BottomTabNavigation')
+        }
+        else{
+          navigation.navigate('BottomTabNavigation')
+        }
+       })
        console.log(user)
         return user
       }
@@ -35,6 +52,40 @@ export default function SignUp() {
          
    }
     
+}
+const sendOtp=async()=>{
+  if(email.length==0){
+    ShowMessage({message:'Please enter the email',error:true})
+    return
+  }
+  else{
+    setloading(true)
+    firestore().collection('users').where('email','==',email).get().then((snapshot)=>{
+      if(snapshot.docs.length>0&&snapshot.docs[0].googleLogin){
+        Alert.alert("This email is already registered with google")
+        ShowMessage({message:'This email is already registered with google',error:true})
+        setloading(false)
+        return
+      }
+      else{
+        axios.post(BACKEND_URL+'/generateOtp',{email}).then(async(res)=>{
+          if(res.data.error){
+            setloading(false)
+            ShowMessage({message:res.data.message,error:true})
+            return
+          }
+          else{
+            await firestore().collection('otp').add({email,otp:res.data.otp,expiresIn:Date.now()+9*60*1000,used:0})
+            setloading(false)
+            navigation.navigate('otpVerification',{email,otp:res.data.otp})
+            return
+          }
+          
+      })
+      }
+    })
+ 
+  }
 }
   return (
     <View
@@ -84,7 +135,7 @@ export default function SignUp() {
             padding: 20,
           }}>
           <Text style={{color: 'black', fontWeight: 'bold', fontSize: 28}}>
-            Sign Up for free
+          Sign In / Sign Up
           </Text>
           <View style={{width: '100%', gap: 15}}>
             <TextInput
@@ -120,35 +171,16 @@ export default function SignUp() {
               </Text>
             </View>
           </View>
-          <TouchableOpacity
-          onPress={async()=>{
-            axios.post(BACKEND_URL+'/generateOtp',{email}).then(async(res)=>{
-                if(res.data.error){
-                  Alert.alert("Error",res.data.message)
-                }
-                else{
-                  await firestore().collection('otp').add({email,otp:res.data.otp,expiresIn:Date.now()+9*60*1000,used:0})
-                  navigation.navigate('otpVerification',{email,otp:res.data.otp})
-                }
-            })
-            navigation.navigate('otpVerification',{email})
-          }}
-            style={{
-              height: 60,
-              width: '100%',
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderColor: '#20d0ce',
-              borderWidth: 3,
-              elevation: 4,
-              backgroundColor: 'white',
-            }}>
-            <Text
-              style={{fontSize: 24, color: '#20d0ce', fontWeight: 'normal'}}>
-              Sign Up
-            </Text>
-          </TouchableOpacity>
+          <Button
+            onPress={sendOtp}
+            mode='contained'
+            style={{height:60,width:'100%',borderRadius:15,alignItems:'center',justifyContent:'center'}}
+            buttonColor={theme.colors.secondary}
+            textColor='white'
+            loading={loading}
+            labelStyle={{fontSize:20}}
+            
+          >Sign In</Button>
           <View
             style={{
               width: '100%',
