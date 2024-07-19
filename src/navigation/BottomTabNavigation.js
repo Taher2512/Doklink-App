@@ -35,7 +35,7 @@ export default function BottomTabNavigation() {
           borderTopLeftRadius: 45,
           height: '10.5%',
           elevation: 0,
-          backgroundColor: '#1E40AF',
+          backgroundColor: theme.colors.secondary,
           ...styles.shadow,
         },
       }}

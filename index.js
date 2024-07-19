@@ -10,11 +10,11 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#fff',
-    secondary: '#1E40AF',
+    secondary: '#125873',
     tertiary: '#E9E3F1',
     secondaryContainer: '#E1F5FE',
     surfaceVariant: '#fff',
-    onSurfaceVariant: '#1E40AF',
+    onSurfaceVariant: '#125873',
     outline: '#fff',
     textColor:'black'
   },

@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, Image, Text, Pressable} from 'react-native';
 import {
@@ -94,7 +95,9 @@ const Home = () => {
           Current location: 123 Main St., Kolkata - 700016
         </Text>
         <LinearGradient
-          colors={['#4c669f', '#3b5998', '#192f6a']}
+          colors={[ '#91d8f3','#33a7d3',"#146c8d"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           className="flex-row justify-end items-center w-full h-32 mt-10 rounded-lg"
           style={{
             shadowColor: '#000',
@@ -121,8 +124,10 @@ const Home = () => {
           <Pressable
             onPress={() => console.log('hi')}
             className="justify-center items-center">
-            <LinearGradient
-              colors={['#4c669f', '#3b5998', '#192f6a']}
+            <View
+              colors={["#d9f7f7","#d9f7f7"]}
+               start={{ x: 0, y: 0 }}
+               end={{ x: 1, y: 0 }}
               className="h-28 w-40 rounded-lg justify-center items-center"
               style={{
                 shadowColor: '#000',
@@ -133,22 +138,27 @@ const Home = () => {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.5,
                 elevation: 15,
+                flexDirection:"row",
+                backgroundColor:'#d9f7f7',
+                justifyContent:'flex-start',
+                paddingLeft:10
               }}>
+              <View style={{width:"40%",height:"100%"}}>
+                <Text style={{color:"black",fontWeight:'bold',fontSize:25}}>Bed Booking</Text>
+              </View>
               <Image
                 source={require('../assets/icons/bed-booking-banner.png')}
                 className="h-28 w-28 absolute"
-                style={{resizeMode: 'contain'}}
+                style={{resizeMode: 'contain',left:60,top:20}}
               />
-            </LinearGradient>
-            <Text className="text-[#192f6a] mt-1 font-semibold text-base">
-              Bed Booking
-            </Text>
+            </View>
+            
           </Pressable>
           <Pressable
             onPress={() => console.log('hi2')}
             className="justify-center items-center">
             <LinearGradient
-              colors={['#4c669f', '#3b5998', '#192f6a']}
+              colors={["#d9f7f7","#d9f7f7"]}
               className="h-28 w-40 rounded-lg justify-center items-center"
               style={{
                 shadowColor: '#000',
@@ -159,16 +169,19 @@ const Home = () => {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.5,
                 elevation: 15,
+                flexDirection:"row",
+                justifyContent:"flex-start",
+                paddingLeft:10
               }}>
+               <View style={{width:"60%",height:"100%",justifyContent:"center",alignItems:'flex-start'}}>
+                <Text style={{color:"black",fontWeight:'bold',fontSize:22,}}>DOCTOR APPOINTMENT</Text>
+              </View>
               <Image
                 source={require('../assets/icons/doctor-appointment-banner.png')}
-                className="h-24 w-24 absolute"
-                style={{resizeMode: 'contain'}}
+                className="h-28 w-24 absolute"
+                style={{resizeMode: 'contain',left:90}}
               />
             </LinearGradient>
-            <Text className="text-[#192f6a] mt-1 font-semibold text-base">
-              Doctor Appointment
-            </Text>
           </Pressable>
         </View>
       </View>

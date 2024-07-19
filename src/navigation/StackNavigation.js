@@ -9,8 +9,8 @@ import {useTheme} from 'react-native-paper';
 import Register from '../screens/Register';
 import Login from '../screens/Login';
 import BottomTabNavigation from './BottomTabNavigation';
-import SignUp from '../screens/SignUp';
 import OtpVerification from '../screens/OtpVerification';
+import SignUp from '../screens/Signup';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +24,7 @@ const StackNavigation = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         })}
-        initialRouteName={'SignUp'}>
+        initialRouteName={'Register'}>
         <Stack.Screen
           name="Register"
           component={Register}

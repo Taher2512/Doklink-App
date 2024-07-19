@@ -4,12 +4,13 @@ import {StyleSheet, View} from 'react-native';
 
 import OnboardingModal from '../components/OnboardingModal';
 import Home from './Home';
+import BottomTabNavigation from '../navigation/BottomTabNavigation';
 
 const Register = () => {
   return (
     <View className="flex-1">
-      {/* <OnboardingModal /> */}
-      <Home />
+      <OnboardingModal />
+      {/* <BottomTabNavigation/> */}
     </View>
   );
 };
