@@ -164,7 +164,7 @@ const OnboardingModal = () => {
             </Button>
             {currentStep === steps.length - 1 ? (
               <View>
-                <Button
+                {/* <Button
                   icon="login"
                   mode="outlined"
                   className="mt-11"
@@ -174,11 +174,11 @@ const OnboardingModal = () => {
                   labelStyle={{fontSize: 17}}
                   onPress={goToSignup}>
                   LOGIN
-                </Button>
+                </Button> */}
                 <Button
                   icon="account"
                   mode="outlined"
-                  className="mt-3.5"
+                  className="mt-11"
                   contentStyle={{
                     flexDirection: 'row-reverse',
                   }}
