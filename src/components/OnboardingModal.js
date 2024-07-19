@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Button, Modal, Portal, Text, useTheme} from 'react-native-paper';
@@ -35,6 +36,7 @@ const OnboardingModal = () => {
   const [direction, setDirection] = useState('forward');
 
   const theme = useTheme();
+  const navigation = useNavigation();
 
   const progressPosition = useSharedValue(0);
 
@@ -78,6 +80,24 @@ const OnboardingModal = () => {
     return direction === 'forward'
       ? FadeInRight.duration(350)
       : FadeInLeft.duration(350);
+  };
+
+  const goToLogin = () => {
+    hideModal();
+    navigation.navigate('Login');
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Login'}],
+    });
+  };
+
+  const goToSignup = () => {
+    hideModal();
+    navigation.navigate('SignUp');
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'SignUp'}],
+    });
   };
 
   return (
@@ -152,7 +172,7 @@ const OnboardingModal = () => {
                     flexDirection: 'row-reverse',
                   }}
                   labelStyle={{fontSize: 17}}
-                  onPress={goToNextStep}>
+                  onPress={goToLogin}>
                   LOGIN
                 </Button>
                 <Button
@@ -163,7 +183,7 @@ const OnboardingModal = () => {
                     flexDirection: 'row-reverse',
                   }}
                   labelStyle={{fontSize: 17}}
-                  onPress={goToNextStep}>
+                  onPress={goToSignup}>
                   SIGN UP
                 </Button>
               </View>

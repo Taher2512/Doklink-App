@@ -1,20 +1,22 @@
+/*eslint-disable*/
 import React from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import Navigation from './src/navigation';
 
 function App() {
+  
   return (
-    <>
+    
+    <View style={{flex:1}}>
       <StatusBar
-        barStyle="light-content"
         backgroundColor="transparent"
         translucent
       />
-      <Navigation />
-    </>
+      <Navigation/>
+      </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})
 
 export default App;
