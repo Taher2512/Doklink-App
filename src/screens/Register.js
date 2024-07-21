@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet, StatusBar } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TextInput, Button, Text } from 'react-native-paper';
 
 const SignUpPage = () => {
   const [fullName, setFullName] = useState('');
@@ -21,54 +22,59 @@ const SignUpPage = () => {
               resizeMode="contain"
             />
           </View>
-          <View className="flex-1 px-6  pb-6">
+          <View className="px-6  pb-6">
             <View className="items-center mb-8">
-              <View className="w-24 h-24 bg-gray-200 rounded-full absolute top-[-48]" />
-              <Text className="text-xl font-semibold mt-16 text-black">Profile</Text>
+              <Text className="text-2xl font-semibold ">Enter Details</Text>
             </View>
             
             <View className="space-y-4">
               <TextInput
-                className="border border-gray-300 rounded-lg p-3"
-                placeholder="Full Name"
-                placeholderTextColor="#999"
+                label="Full Name"
                 value={fullName}
                 onChangeText={setFullName}
+                mode="flat"
+                className="bg-slate-100  rounded-lg text-gray-300"
               />
               <TextInput
-                className="border border-gray-300 rounded-lg p-3"
-                placeholder="Email"
-                placeholderTextColor="#999"
+                label="Email"
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
+                mode="flat"
+                className="bg-slate-100  rounded-lg text-gray-300"
               />
               <TextInput
-                className="border border-gray-300 rounded-lg p-3"
-                placeholder="Gender"
-                placeholderTextColor="#999"
+                label="Gender"
                 value={gender}
                 onChangeText={setGender}
+                mode="flat"
+                className="bg-slate-100  rounded-lg text-gray-300"
               />
               <TextInput
-                className="border border-gray-300 rounded-lg p-3"
-                placeholder="Date of Birth"
-                placeholderTextColor="#999"
+                label="Date of Birth"
                 value={dateOfBirth}
                 onChangeText={setDateOfBirth}
+                mode="flat"
+                className="bg-slate-100  rounded-lg text-gray-300"
               />
               <TextInput
-                className="border border-gray-300 rounded-lg p-3"
-                placeholder="Address"
-                placeholderTextColor="#999"
+                label="Address"
                 value={address}
                 onChangeText={setAddress}
+                mode="flat"
+                className="bg-slate-100  rounded-lg text-gray-300"
               />
             </View>
             
-            <TouchableOpacity className="bg-[#125873] rounded-lg p-4 mt-8">
-              <Text className="text-white text-center font-bold">DONE</Text>
-            </TouchableOpacity>
+            <Button 
+              mode="contained" 
+              onPress={() => console.log('submit pressed')} 
+              className="mt-8 py-2 bg-[#125873] "
+              labelStyle="text-base font-bold"
+              
+            >
+              Submit
+            </Button>
           </View>
         </View>
       </ScrollView>
