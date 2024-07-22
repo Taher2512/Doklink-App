@@ -62,9 +62,9 @@ export default function SignIn() {
             firestore()
               .collection('users')
               .add({email: user.email, googleLogin: 1, date: Date.now()});
-            navigation.navigate('BottomTabNavigation');
+            navigation.navigate('Register', {email: user.email});
           } else {
-            navigation.navigate('BottomTabNavigation');
+            navigation.navigate('Register', {email: user.email});
           }
         });
       console.log(user);

@@ -18,7 +18,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {City, Country, State} from 'country-state-city';
 import DateSelector from '../components/DateSelector';
 
-const SignUpPage = () => {
+const SignUpPage = ({route}) => {
   const [fullName, setFullName] = useState('');
   const [countryOpen, setCountryOpen] = useState(false);
   const [countries, setCountries] = useState([]);
@@ -46,6 +46,7 @@ const SignUpPage = () => {
   const [showError, setShowError] = useState(false);
 
   const theme = useTheme();
+  const {email} = route.params;
 
   useEffect(() => {
     const allCountries = Country.getAllCountries();
@@ -132,6 +133,7 @@ const SignUpPage = () => {
     } else {
       setShowError(false);
       console.log({
+        email,
         fullName,
         selectedCountry,
         selectedState,

@@ -29,18 +29,21 @@ const getRemaining = time => {
   return {mins: formatNumber(mins), secs: formatNumber(secs)};
 };
 export default function OtpVerification({navigation, route}) {
-  const theme = useTheme();
-  const dimension = Dimensions.get('window');
-  const [remainingSecs, setRemainingSecs] = useState(9 * 60);
-  const [isActive, setIsActive] = useState(true);
-  const {mins, secs} = getRemaining(remainingSecs);
-  const [checked, setchecked] = useState(false);
-  const visibleHeight = dimension.width / Math.sqrt(2);
   const [code, setCode] = useState(['', '', '', '']);
   const [loading, setloading] = useState(false);
+  const [checked, setchecked] = useState(false);
+  const [remainingSecs, setRemainingSecs] = useState(9 * 60);
+  const [isActive, setIsActive] = useState(true);
+
+  const theme = useTheme();
+  const dimension = Dimensions.get('window');
+  const {mins, secs} = getRemaining(remainingSecs);
+  const visibleHeight = dimension.width / Math.sqrt(2);
+
   toggle = () => {
     setIsActive(!isActive);
   };
+
   const verify = () => {
     let wholecode = code.join('');
     if (wholecode.length < 4) {
@@ -81,7 +84,7 @@ export default function OtpVerification({navigation, route}) {
                   }
                   setloading(false);
                   setRemainingSecs(0);
-                  navigation.navigate('Register');
+                  navigation.navigate('Register', {email: route.params.email});
                 });
               setloading(false);
             }
@@ -92,6 +95,7 @@ export default function OtpVerification({navigation, route}) {
         });
     }
   };
+
   useEffect(() => {
     let interval = null;
     setIsActive(true);
@@ -105,6 +109,7 @@ export default function OtpVerification({navigation, route}) {
     }
     return () => clearInterval(interval);
   }, [isActive, remainingSecs]);
+
   return (
     <ScrollView contentContainerStyle={{flex: 1}}>
       <View
