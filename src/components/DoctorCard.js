@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
 
 const DoctorCard = ({ doctor }) => {
   const theme = useTheme();
@@ -25,6 +26,12 @@ const DoctorCard = ({ doctor }) => {
 
   return (
     <View className="m-2 bg-white rounded-lg max-h-60 w-32 overflow-hidden border-2 border-[#125873]">
+      <LinearGradient
+        colors={['#33333380', '#99999980']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        className="absolute top-0 left-0 right-0 bottom-0"
+      />
       <Image
         source={doctor.image}
         className="w-28 h-28 rounded-lg"
