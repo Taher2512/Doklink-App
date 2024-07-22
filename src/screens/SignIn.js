@@ -218,7 +218,7 @@ export default function SignIn() {
               }}>
               {loading && <ActivityIndicator style={{marginRight: 12}} />}
               <Text style={{color: '#fff', fontSize: 20, fontWeight: '500'}}>
-                {loading ? 'Signing In...' : 'Sign In'}
+                {loading ? 'Signing in...' : 'Sign In'}
               </Text>
             </TouchableOpacity>
             <View
