@@ -81,7 +81,7 @@ export default function OtpVerification({navigation, route}) {
                   }
                   setloading(false);
                   setRemainingSecs(0);
-                  navigation.navigate('BottomTabNavigation');
+                  navigation.navigate('Register');
                 });
               setloading(false);
             }
