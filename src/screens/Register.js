@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, ScrollView, Image, StyleSheet, StatusBar } from 'react-native';
+import { View, ScrollView, Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, Button, Text } from 'react-native-paper';
 
@@ -84,4 +84,3 @@ const SignUpPage = () => {
 
 export default SignUpPage;
 
-const styles = StyleSheet.create({ });
