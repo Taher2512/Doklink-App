@@ -11,6 +11,7 @@ import Login from '../screens/Login';
 import BottomTabNavigation from './BottomTabNavigation';
 import OtpVerification from '../screens/OtpVerification';
 import SignIn from '../screens/SignIn';
+import Home from '../screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +25,7 @@ const StackNavigation = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         })}
-        initialRouteName={'Register'}>
+        initialRouteName={'Home'}>
         <Stack.Screen
           name="Register"
           component={Register}
@@ -40,6 +41,8 @@ const StackNavigation = () => {
           component={BottomTabNavigation}
         />
         <Stack.Screen name="otpVerification" component={OtpVerification} />
+        <Stack.Screen name="Home" component={Home} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

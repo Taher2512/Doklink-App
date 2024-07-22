@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Image, Text, Pressable} from 'react-native';
+import {View, FlatList, Image, Text, Pressable, StatusBar, ScrollView} from 'react-native';
 import {
   Card,
   Button,
@@ -12,6 +12,11 @@ import {
 import {sampleHospitals} from '../utils/sampleData';
 import Geolocation from '@react-native-community/geolocation';
 import LinearGradient from 'react-native-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import DoctorCard from '../components/DoctorCard';
+import HospitalCard from '../components/HospitalCard';
+
+
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,7 +45,8 @@ const Home = () => {
   }, []);
 
   return (
-    <View className="flex-1 bg-gray-100 ">
+    <ScrollView className="flex-1 bg-gray-100 mt-8">
+      <StatusBar barStyle={"dark-content"}/>
       <View className="p-4">
         <View className="flex-row justify-between items-center mb-4">
           <View className="flex-row items-center">
@@ -143,8 +149,9 @@ const Home = () => {
                 justifyContent:'flex-start',
                 paddingLeft:10
               }}>
-              <View style={{width:"40%",height:"100%"}}>
-                <Text style={{color:"black",fontWeight:'bold',fontSize:25}}>Bed Booking</Text>
+              <View style={{width:"40%",height:"100%",paddingTop:10}}>
+                <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:100}}>Bed</Text>
+                <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:100}}>Booking</Text>
               </View>
               <Image
                 source={require('../assets/icons/bed-booking-banner.png')}
@@ -173,19 +180,53 @@ const Home = () => {
                 justifyContent:"flex-start",
                 paddingLeft:10
               }}>
-               <View style={{width:"60%",height:"100%",justifyContent:"center",alignItems:'flex-start'}}>
-                <Text style={{color:"black",fontWeight:'bold',fontSize:22,}}>DOCTOR APPOINTMENT</Text>
+               <View style={{width:"60%",height:"100%",paddingTop:10}}>
+               <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:100}}>Doctor</Text>
+               <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:110}}>Appointment</Text>
               </View>
               <Image
                 source={require('../assets/icons/doctor-appointment-banner.png')}
                 className="h-28 w-24 absolute"
-                style={{resizeMode: 'contain',left:90}}
+                style={{resizeMode: 'contain',left:95}}
               />
             </LinearGradient>
           </Pressable>
         </View>
+ {/* Top Doctors Section */}
+ <Text className="text-[#192f6a] mt-6 font-bold text-2xl ">
+          Top Doctors
+        </Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={[
+            { id: '1', name: 'Dr. Shreya Bhaskar', specialty: 'General Physician', rating: '4.9' },
+            { id: '2', name: 'Dr. Tushar Mishra', specialty: 'General Physician', rating: '4.8' },
+            { id: '3', name: 'Dr. Priya Shukla', specialty: 'General Physician', rating: '3.5' },
+            { id: '4', name: 'Dr. Shreya Bhaskar', specialty: 'General Physician', rating: '4.9' },
+            { id: '5', name: 'Dr. Tushar Mishra', specialty: 'General Physician', rating: '4.8' },
+            { id: '6', name: 'Dr. Priya Shukla', specialty: 'General Physician', rating: '3.5' },
+          ]}
+          renderItem={({ item }) => <DoctorCard doctor={item} />}
+          keyExtractor={item => item.id}
+        />
+     {/* Top Hospitals Section */}
+     <Text className="text-[#192f6a] mt-6 font-bold text-2xl">
+          Top Hospitals
+        </Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={[
+            { id: '1', name: 'Apollo Hospital', location: 'Kolkata', rating: '4.9' },
+            { id: '2', name: 'AIIMS', location: 'Delhi', rating: '4.8' },
+            { id: '3', name: 'Fortis Hospital', location: 'Mumbai', rating: '4.7' },
+          ]}
+          renderItem={({ item }) => <HospitalCard hospital={item} />}
+          keyExtractor={item => item.id}
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
