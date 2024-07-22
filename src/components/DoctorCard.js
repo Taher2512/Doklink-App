@@ -26,7 +26,7 @@ const DoctorCard = ({ doctor }) => {
   return (
     <View className="m-2 bg-white rounded-lg max-h-60 w-32 overflow-hidden border-2 border-[#125873]">
       <Image
-        source={require('../assets/icons/image.png')}
+        source={doctor.image}
         className="w-28 h-28 rounded-lg"
       />
       <View className="flex items-center mt-1 bg-[#20D0CE66] h-full py-2 px-3 space-y-2 border-t border-[#125873]">

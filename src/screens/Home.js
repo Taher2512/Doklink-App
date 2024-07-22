@@ -1,6 +1,14 @@
 /*eslint-disable*/
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Image, Text, Pressable, StatusBar, ScrollView} from 'react-native';
+import {
+  View,
+  FlatList,
+  Image,
+  Text,
+  Pressable,
+  StatusBar,
+  ScrollView,
+} from 'react-native';
 import {
   Card,
   Button,
@@ -12,11 +20,9 @@ import {
 import {sampleHospitals} from '../utils/sampleData';
 import Geolocation from '@react-native-community/geolocation';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import DoctorCard from '../components/DoctorCard';
 import HospitalCard from '../components/HospitalCard';
-
-
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,7 +52,7 @@ const Home = () => {
 
   return (
     <ScrollView className="flex-1 bg-gray-100 mt-8">
-      <StatusBar barStyle={"dark-content"}/>
+      <StatusBar barStyle={'dark-content'} />
       <View className="p-4">
         <View className="flex-row justify-between items-center mb-4">
           <View className="flex-row items-center">
@@ -101,9 +107,9 @@ const Home = () => {
           Current location: 123 Main St., Kolkata - 700016
         </Text>
         <LinearGradient
-          colors={[ '#91d8f3','#33a7d3',"#146c8d"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
+          colors={['#91d8f3', '#33a7d3', '#146c8d']}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
           className="flex-row justify-end items-center w-full h-32 mt-10 rounded-lg"
           style={{
             shadowColor: '#000',
@@ -131,9 +137,9 @@ const Home = () => {
             onPress={() => console.log('hi')}
             className="justify-center items-center">
             <View
-              colors={["#d9f7f7","#d9f7f7"]}
-               start={{ x: 0, y: 0 }}
-               end={{ x: 1, y: 0 }}
+              colors={['#d9f7f7', '#d9f7f7']}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
               className="h-28 w-40 rounded-lg justify-center items-center"
               style={{
                 shadowColor: '#000',
@@ -144,28 +150,43 @@ const Home = () => {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.5,
                 elevation: 15,
-                flexDirection:"row",
-                backgroundColor:'#d9f7f7',
-                justifyContent:'flex-start',
-                paddingLeft:10
+                flexDirection: 'row',
+                backgroundColor: '#d9f7f7',
+                justifyContent: 'flex-start',
+                paddingLeft: 10,
               }}>
-              <View style={{width:"40%",height:"100%",paddingTop:10}}>
-                <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:100}}>Bed</Text>
-                <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:100}}>Booking</Text>
+              <View style={{width: '40%', height: '100%', paddingTop: 10}}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    width: 100,
+                  }}>
+                  Bed
+                </Text>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    width: 100,
+                  }}>
+                  Booking
+                </Text>
               </View>
               <Image
                 source={require('../assets/icons/bed-booking-banner.png')}
                 className="h-28 w-28 absolute"
-                style={{resizeMode: 'contain',left:60,top:20}}
+                style={{resizeMode: 'contain', left: 60, top: 20}}
               />
             </View>
-            
           </Pressable>
           <Pressable
             onPress={() => console.log('hi2')}
             className="justify-center items-center">
             <LinearGradient
-              colors={["#d9f7f7","#d9f7f7"]}
+              colors={['#d9f7f7', '#d9f7f7']}
               className="h-28 w-40 rounded-lg justify-center items-center"
               style={{
                 shadowColor: '#000',
@@ -176,53 +197,102 @@ const Home = () => {
                 shadowOpacity: 0.25,
                 shadowRadius: 3.5,
                 elevation: 15,
-                flexDirection:"row",
-                justifyContent:"flex-start",
-                paddingLeft:10
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                paddingLeft: 10,
               }}>
-               <View style={{width:"60%",height:"100%",paddingTop:10}}>
-               <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:100}}>Doctor</Text>
-               <Text style={{color:"black",fontWeight:'bold',fontSize:16,width:110}}>Appointment</Text>
+              <View style={{width: '60%', height: '100%', paddingTop: 10}}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    width: 100,
+                  }}>
+                  Doctor
+                </Text>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    width: 110,
+                  }}>
+                  Appointment
+                </Text>
               </View>
               <Image
                 source={require('../assets/icons/doctor-appointment-banner.png')}
                 className="h-28 w-24 absolute"
-                style={{resizeMode: 'contain',left:95}}
+                style={{resizeMode: 'contain', left: 95}}
               />
             </LinearGradient>
           </Pressable>
         </View>
- {/* Top Doctors Section */}
- <Text className="text-[#192f6a] mt-6 font-bold text-2xl ">
+        {/* Top Doctors Section */}
+        <Text className="text-[#192f6a] mt-6 font-bold text-2xl ">
           Top Doctors
         </Text>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           data={[
-            { id: '1', name: 'Dr. Shreya Bhaskar', specialty: 'General Physician', rating: '4.9' },
-            { id: '2', name: 'Dr. Tushar Mishra', specialty: 'General Physician', rating: '4.8' },
-            { id: '3', name: 'Dr. Priya Shukla', specialty: 'General Physician', rating: '3.5' },
-            { id: '4', name: 'Dr. Shreya Bhaskar', specialty: 'General Physician', rating: '4.9' },
-            { id: '5', name: 'Dr. Tushar Mishra', specialty: 'General Physician', rating: '4.8' },
-            { id: '6', name: 'Dr. Priya Shukla', specialty: 'General Physician', rating: '3.5' },
+            {
+              id: '1',
+              name: 'Dr. Shreya Bhaskar',
+              specialty: 'General Physician',
+              rating: '4.9',
+              image: require('../assets/icons/dr1.png'),
+            },
+            {
+              id: '2',
+              name: 'Dr. Tushar Mishra',
+              specialty: 'General Physician',
+              rating: '4.8',
+              image: require('../assets/icons/dr2.png'),
+            },
+            {
+              id: '3',
+              name: 'Dr. Priya Shukla',
+              specialty: 'General Physician',
+              rating: '4.7',
+              image: require('../assets/icons/dr1.png'),
+            },
           ]}
-          renderItem={({ item }) => <DoctorCard doctor={item} />}
+          renderItem={({item}) => <DoctorCard doctor={item} />}
           keyExtractor={item => item.id}
         />
-     {/* Top Hospitals Section */}
-     <Text className="text-[#192f6a] mt-6 font-bold text-2xl">
+        {/* Top Hospitals Section */}
+        <Text className="text-[#192f6a] mt-6 font-bold text-2xl">
           Top Hospitals
         </Text>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           data={[
-            { id: '1', name: 'Apollo Hospital', location: 'Kolkata', rating: '4.9' },
-            { id: '2', name: 'AIIMS', location: 'Delhi', rating: '4.8' },
-            { id: '3', name: 'Fortis Hospital', location: 'Mumbai', rating: '4.7' },
+            {
+              id: '1',
+              name: 'Apollo Hospital',
+              location: 'Kolkata',
+              rating: '4.9',
+              image: require('../assets/icons/dr1.png'),
+            },
+            {
+              id: '2',
+              name: 'AIIMS',
+              location: 'Delhi',
+              rating: '4.8',
+              image: require('../assets/icons/dr1.png'),
+            },
+            {
+              id: '3',
+              name: 'Fortis Hospital',
+              location: 'Mumbai',
+              rating: '4.7',
+              image: require('../assets/icons/dr1.png'),
+            },
           ]}
-          renderItem={({ item }) => <HospitalCard hospital={item} />}
+          renderItem={({item}) => <HospitalCard hospital={item} />}
           keyExtractor={item => item.id}
         />
       </View>
