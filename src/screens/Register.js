@@ -29,6 +29,7 @@ const SignUpPage = () => {
   const [cityOpen, setCityOpen] = useState(false);
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [genderOpen, setGenderOpen] = useState(false);
   const [genders, setGenders] = useState([
     {label: 'Male', value: 'male'},
@@ -122,6 +123,7 @@ const SignUpPage = () => {
       selectedCountry === '' ||
       selectedState === '' ||
       selectedCity === '' ||
+      zipCode === '' ||
       selectedGender === '' ||
       birthDate === ''
     ) {
@@ -134,6 +136,7 @@ const SignUpPage = () => {
         selectedCountry,
         selectedState,
         selectedCity,
+        zipCode,
         selectedGender,
         birthDate,
       });
@@ -161,10 +164,10 @@ const SignUpPage = () => {
 
             <View className="space-y-4">
               <TextInput
+                mode="flat"
                 label="Full Name"
                 value={fullName}
                 onChangeText={setFullName}
-                mode="flat"
                 theme={{colors: {primary: theme.colors.secondary}}}
                 className="bg-slate-100 rounded-lg text-gray-300"
               />
@@ -324,6 +327,16 @@ const SignUpPage = () => {
                   }}
                 />
               </View>
+
+              <TextInput
+                mode="flat"
+                label="ZIP Code"
+                keyboardType="numeric"
+                value={zipCode}
+                onChangeText={setZipCode}
+                theme={{colors: {primary: theme.colors.secondary}}}
+                className="bg-slate-100 rounded-lg text-gray-300"
+              />
 
               <View
                 style={{
