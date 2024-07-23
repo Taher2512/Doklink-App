@@ -50,6 +50,37 @@ const Home = () => {
     );
   }, []);
 
+
+  const hospitals = [
+    {
+      id: '1',
+      name: 'Apollo Hospital',
+      location: 'Kolkata',
+      rating: '4.9',
+      ratingCount: 100,
+      image: require('../assets/icons/fortis.png'),
+      bedsAvailable: 100,
+    },
+    {
+      id: '2',
+      name: 'AIIMS',
+      location: 'Delhi',
+      rating: '4.8',
+      ratingCount: 100,
+      image: require('../assets/icons/amri.png'),
+      bedsAvailable: 100,
+    },
+    {
+      id: '3',
+      name: 'Fortis Hospital',
+      location: 'Mumbai',
+      rating: '4.7',
+      ratingCount: 100,
+      image: require('../assets/icons/bppoddar.png'),
+      bedsAvailable: 100,
+    },
+  ]
+
   return (
     <ScrollView className="flex-1 bg-gray-100 mt-8">
       <StatusBar barStyle={'dark-content'} />
@@ -266,35 +297,13 @@ const Home = () => {
         <Text className="text-[#192f6a] mt-6 font-bold text-2xl">
           Top Hospitals
         </Text>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={[
-            {
-              id: '1',
-              name: 'Apollo Hospital',
-              location: 'Kolkata',
-              rating: '4.9',
-              image: require('../assets/icons/dr1.png'),
-            },
-            {
-              id: '2',
-              name: 'AIIMS',
-              location: 'Delhi',
-              rating: '4.8',
-              image: require('../assets/icons/dr1.png'),
-            },
-            {
-              id: '3',
-              name: 'Fortis Hospital',
-              location: 'Mumbai',
-              rating: '4.7',
-              image: require('../assets/icons/dr1.png'),
-            },
-          ]}
-          renderItem={({item}) => <HospitalCard hospital={item} />}
-          keyExtractor={item => item.id}
-        />
+        <ScrollView>
+      <View className="p-4 mt-8">
+        {hospitals.map((hospital, index) => (
+          <HospitalCard key={index} hospital={hospital} />
+        ))}
+      </View>
+    </ScrollView>
       </View>
     </ScrollView>
   );

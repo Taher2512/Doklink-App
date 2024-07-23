@@ -14,11 +14,11 @@ const DoctorCard = ({ doctor }) => {
 
     for (let i = 1; i <= 5; i++) {
       if (i <= fullStars) {
-        stars.push(<Icon key={i} name="star" size={14} color="yellow" />);
+        stars.push(<Icon key={i} name="star" size={14} color="gold" />);
       } else if (i === fullStars + 1 && hasHalfStar) {
-        stars.push(<Icon key={i} name="star-half-full" size={14} color="yellow" />);
+        stars.push(<Icon key={i} name="star-half-full" size={14} color="gold" />);
       } else {
-        stars.push(<Icon key={i} name="star-outline" size={14} color="yellow" />);
+        stars.push(<Icon key={i} name="star-outline" size={14} color="gold" />);
       }
     }
     return stars;
