@@ -35,6 +35,7 @@ const DoctorCard = ({ doctor }) => {
       <Image
         source={doctor.image}
         className="w-28 h-28 rounded-lg"
+        resizeMode='contain'
       />
       <View className="flex items-center mt-1 bg-[#20D0CE66] h-full py-2 px-3 space-y-2 border-t border-[#125873]">
         <Text className="font-bold text-sm text-black text-center">{doctor.name}</Text>
