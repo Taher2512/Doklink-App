@@ -12,6 +12,7 @@ import BottomTabNavigation from './BottomTabNavigation';
 import OtpVerification from '../screens/OtpVerification';
 import SignIn from '../screens/SignIn';
 import Onboarding from '../screens/Onboarding';
+import Home from '../screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,7 @@ const StackNavigation = () => {
           component={BottomTabNavigation}
         />
         <Stack.Screen name="otpVerification" component={OtpVerification} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
