@@ -86,7 +86,6 @@ export default function OtpVerification({navigation, route}) {
                   setRemainingSecs(0);
                   navigation.navigate('Register', {email: route.params.email});
                 });
-              setloading(false);
             }
           } else {
             setloading(false);

@@ -20,6 +20,7 @@ import DateSelector from '../components/DateSelector';
 
 const SignUpPage = ({route}) => {
   const [fullName, setFullName] = useState('');
+  const [mobile, setMobile] = useState('');
   const [countryOpen, setCountryOpen] = useState(false);
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -121,6 +122,7 @@ const SignUpPage = ({route}) => {
   const submitForm = async () => {
     if (
       fullName === '' ||
+      mobile === '' ||
       selectedCountry === '' ||
       selectedState === '' ||
       selectedCity === '' ||
@@ -135,6 +137,7 @@ const SignUpPage = ({route}) => {
       console.log({
         email,
         fullName,
+        mobile,
         selectedCountry,
         selectedState,
         selectedCity,
@@ -170,6 +173,15 @@ const SignUpPage = ({route}) => {
                 label="Full Name"
                 value={fullName}
                 onChangeText={setFullName}
+                theme={{colors: {primary: theme.colors.secondary}}}
+                className="bg-slate-100 rounded-lg text-gray-300"
+              />
+              <TextInput
+                mode="flat"
+                label="Mobile No."
+                keyboardType="numeric"
+                value={mobile}
+                onChangeText={setMobile}
                 theme={{colors: {primary: theme.colors.secondary}}}
                 className="bg-slate-100 rounded-lg text-gray-300"
               />
