@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
@@ -17,8 +18,9 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import {City, Country, State} from 'country-state-city';
 import DateSelector from '../components/DateSelector';
+import firestore from '@react-native-firebase/firestore';
 
-const SignUpPage = ({route}) => {
+const SignUpPage = ({navigation,route}) => {
   const [fullName, setFullName] = useState('');
   const [mobile, setMobile] = useState('');
   const [countryOpen, setCountryOpen] = useState(false);
@@ -38,7 +40,7 @@ const SignUpPage = ({route}) => {
     {label: 'Other', value: 'other'},
   ]);
   const [selectedGender, setSelectedGender] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [countryZIndex, setCountryZIndex] = useState(4000);
   const [stateZIndex, setStateZIndex] = useState(3000);
   const [cityZIndex, setCityZIndex] = useState(2000);
@@ -120,6 +122,7 @@ const SignUpPage = ({route}) => {
   }, []);
 
   const submitForm = async () => {
+    setLoading(false)
     if (
       fullName === '' ||
       mobile === '' ||
@@ -145,6 +148,25 @@ const SignUpPage = ({route}) => {
         selectedGender,
         birthDate,
       });
+      try {
+        setLoading(true);
+        await firestore().collection('userdetail').add({
+          email,
+          fullName,
+          country:selectedCountry,
+          state:selectedState,
+          city:selectedCity,
+          zipCode,
+          gender:selectedGender,
+          dob:birthDate,
+        })
+        setLoading(false);
+        console.log('User details added successfully');
+        navigation.navigate('BottomTabNavigation')
+      } catch (error) {
+        setShowError(true);
+      }
+      
     }
   };
 
@@ -409,7 +431,10 @@ const SignUpPage = ({route}) => {
               mode="contained"
               onPress={submitForm}
               className="mt-4 bg-[#125873] "
-              labelStyle={{fontSize: 16}}>
+              labelStyle={{fontSize: 16}}
+              loading={loading}
+              >
+              
               Submit
             </Button>
           </View>
