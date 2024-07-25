@@ -20,7 +20,7 @@ import {City, Country, State} from 'country-state-city';
 import DateSelector from '../components/DateSelector';
 import firestore from '@react-native-firebase/firestore';
 
-const SignUpPage = ({navigation,route}) => {
+const SignUpPage = ({navigation, route}) => {
   const [fullName, setFullName] = useState('');
   const [mobile, setMobile] = useState('');
   const [countryOpen, setCountryOpen] = useState(false);
@@ -47,6 +47,9 @@ const SignUpPage = ({navigation,route}) => {
   const [genderZIndex, setGenderZIndex] = useState(1000);
   const [birthDate, setBirthDate] = useState('');
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(
+    'Some error occurred. Please try again later.',
+  );
 
   const theme = useTheme();
   const {email} = route.params;
@@ -122,7 +125,7 @@ const SignUpPage = ({navigation,route}) => {
   }, []);
 
   const submitForm = async () => {
-    setLoading(false)
+    setLoading(false);
     if (
       fullName === '' ||
       mobile === '' ||
@@ -134,39 +137,33 @@ const SignUpPage = ({navigation,route}) => {
       birthDate === ''
     ) {
       setShowError(true);
+      setErrorMessage('Please fill out all the fields!');
       return;
     } else {
       setShowError(false);
-      console.log({
-        email,
-        fullName,
-        mobile,
-        selectedCountry,
-        selectedState,
-        selectedCity,
-        zipCode,
-        selectedGender,
-        birthDate,
-      });
       try {
         setLoading(true);
         await firestore().collection('userdetail').add({
           email,
           fullName,
-          country:selectedCountry,
-          state:selectedState,
-          city:selectedCity,
+          mobile,
+          country: selectedCountry,
+          state: selectedState,
+          city: selectedCity,
           zipCode,
-          gender:selectedGender,
-          dob:birthDate,
-        })
+          gender: selectedGender,
+          dob: birthDate,
+        });
         setLoading(false);
         console.log('User details added successfully');
-        navigation.navigate('BottomTabNavigation')
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'BottomTabNavigation'}],
+        });
       } catch (error) {
         setShowError(true);
+        setErrorMessage('Some error occurred. Please try again later.');
       }
-      
     }
   };
 
@@ -423,7 +420,7 @@ const SignUpPage = ({navigation,route}) => {
             {showError && (
               <View className="bg-red-500 p-3 justify-center items-center rounded-md">
                 <Text className="text-white font-semibold text-sm">
-                  Please fill out all the fields!
+                  {errorMessage}
                 </Text>
               </View>
             )}
@@ -432,10 +429,8 @@ const SignUpPage = ({navigation,route}) => {
               onPress={submitForm}
               className="mt-4 bg-[#125873] "
               labelStyle={{fontSize: 16}}
-              loading={loading}
-              >
-              
-              Submit
+              loading={loading}>
+              {loading ? 'Submitting...' : 'Submit'}
             </Button>
           </View>
         </View>

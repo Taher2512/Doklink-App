@@ -82,7 +82,6 @@ const Home = () => {
 
   return (
     <ScrollView className="flex-1 bg-gray-100">
-      <StatusBar barStyle={'dark-content'} />
       <View className="p-4">
         <View className="flex-row justify-between items-center mb-4">
           <View className="flex-row items-center">
