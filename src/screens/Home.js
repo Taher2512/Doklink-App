@@ -50,8 +50,6 @@ const Home = () => {
     );
   }, []);
 
-
-
   const doctors = [
     {
       id: '1',
@@ -89,7 +87,6 @@ const Home = () => {
       reviewCount: 150,
       image: require('../assets/icons/top_doctor.jpg'),
     },
-    
   ];
 
   const hospitals = [
@@ -117,7 +114,6 @@ const Home = () => {
       reviewCount: 150,
       image: require('../assets/icons/hospital.jpeg'),
     },
-    
   ];
 
   return (
@@ -309,29 +305,30 @@ const Home = () => {
 
         {/* Top Doctors Section */}
         <View>
-  <Text className="text-2xl font-bold my-6 text-[#125873]">
-    Top Hospitals
-  </Text>
-  <ScrollView
-    horizontal={true}
-    showsHorizontalScrollIndicator={false}
-    contentContainerStyle={{paddingHorizontal: 16}}
-  >
-    {hospitals.map(item => (
-      <HospitalCard key={item.id} hospital={item} />
-    ))}
-  </ScrollView>
-</View>
+          <Text className="text-2xl font-bold my-6 text-[#125873]">
+            Top Hospitals
+          </Text>
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{paddingHorizontal: 16}}>
+            {hospitals.map(item => (
+              <HospitalCard key={item.id} hospital={item} />
+            ))}
+          </ScrollView>
+        </View>
 
         {/* Top Hospitals Section */}
         <View>
-  <Text className="text-2xl font-bold my-6 text-[#125873]">Top Doctors</Text>
-  <View>
-    {doctors.map(item => (
-      <DoctorCard key={item.id} doctor={item} />
-    ))}
-  </View>
-</View>
+          <Text className="text-2xl font-bold my-6 text-[#125873]">
+            Top Doctors
+          </Text>
+          <View>
+            {doctors.map(item => (
+              <DoctorCard key={item.id} doctor={item} />
+            ))}
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
