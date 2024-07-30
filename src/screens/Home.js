@@ -50,6 +50,8 @@ const Home = () => {
     );
   }, []);
 
+
+
   const doctors = [
     {
       id: '1',
@@ -58,27 +60,36 @@ const Home = () => {
       distance: '1.1',
       rating: 4.6,
       reviewCount: 150,
-      image: require('../assets/icons/dr1.png'),
+      image: require('../assets/icons/top_doctor.jpg'),
     },
     {
-      id: '1',
+      id: '2',
       name: 'Dr. Shraman Aiyar',
       speciality: 'Clinical Psychologist',
       distance: '1.1',
       rating: 4.6,
       reviewCount: 150,
-      image: require('../assets/icons/dr1.png'),
+      image: require('../assets/icons/top_doctor.jpg'),
     },
     {
-      id: '1',
+      id: '3',
       name: 'Dr. Shraman Aiyar',
       speciality: 'Clinical Psychologist',
       distance: '1.1',
       rating: 4.6,
       reviewCount: 150,
-      image: require('../assets/icons/dr1.png'),
+      image: require('../assets/icons/top_doctor.jpg'),
     },
-    // ... more doctors
+    {
+      id: '4',
+      name: 'Dr. Shraman Aiyar',
+      speciality: 'Clinical Psychologist',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/top_doctor.jpg'),
+    },
+    
   ];
 
   const hospitals = [
@@ -106,7 +117,7 @@ const Home = () => {
       reviewCount: 150,
       image: require('../assets/icons/hospital.jpeg'),
     },
-    // Add more hospital objects as needed
+    
   ];
 
   return (
