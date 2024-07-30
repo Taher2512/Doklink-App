@@ -4,13 +4,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const DoctorCard = ({ doctor }) => {
   return (
-    <View className="flex-row bg-white rounded-xl p-3 mb-3 shadow-sm">
+    <View className="flex-row bg-white rounded-xl  mb-3 shadow-sm">
       <Image 
         source={doctor.image}
-        className="w-24 h-full rounded-xl mr-3"
-        resizeMode='contain'
+        className="w-28 h-full rounded-xl mr-3"
+        resizeMode='cover'
       />
-      <View className="flex-1 justify-between">
+      <View className="flex-1 justify-between py-2">
         <View className="flex-row space-x-4 items-center mt-2">
           <View className="flex-row items-center bg-gray-200 px-2 rounded-lg">
             <Icon name="location-outline" size={14} color="#6B7280" />
