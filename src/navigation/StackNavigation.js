@@ -26,7 +26,7 @@ const StackNavigation = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         })}
-        initialRouteName={'Onboarding'}>
+        initialRouteName={'Home'}>
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
