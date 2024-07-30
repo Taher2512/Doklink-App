@@ -24,9 +24,9 @@ import firestore from '@react-native-firebase/firestore';
 import ShowMessage from '../components/dialogBox/ShowMessage';
 
 export default function SignIn() {
-  const [checked, setchecked] = useState(false);
-  const [email, setemail] = useState('');
-  const [loading, setloading] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   //google signin configuration to be done in ios folder as well
 
   const theme = useTheme();
@@ -78,7 +78,7 @@ export default function SignIn() {
       ShowMessage({message: 'Please enter the email', error: true});
       return;
     } else {
-      setloading(true);
+      setLoading(true);
       firestore()
         .collection('users')
         .where('email', '==', email)
@@ -90,14 +90,14 @@ export default function SignIn() {
               message: 'This email is already registered with google',
               error: true,
             });
-            setloading(false);
+            setLoading(false);
             return;
           } else {
             axios
               .post(BACKEND_URL + '/generateOtp', {email})
               .then(async res => {
                 if (res.data.error) {
-                  setloading(false);
+                  setLoading(false);
                   ShowMessage({message: res.data.message, error: true});
                   return;
                 } else {
@@ -109,7 +109,7 @@ export default function SignIn() {
                       expiresIn: Date.now() + 9 * 60 * 1000,
                       used: 0,
                     });
-                  setloading(false);
+                  setLoading(false);
                   navigation.navigate('otpVerification', {
                     email,
                     otp: res.data.otp,
@@ -187,7 +187,7 @@ export default function SignIn() {
                 textColor="black"
                 placeholderTextColor={'black'}
                 value={email}
-                onChangeText={text => setemail(text)}
+                onChangeText={text => setEmail(text)}
               />
               <View
                 style={{
@@ -197,7 +197,7 @@ export default function SignIn() {
                   alignItems: 'center',
                   gap: 10,
                 }}>
-                <CheckBox setchecked={setchecked} checked={checked} />
+                <CheckBox setChecked={setChecked} checked={checked} />
                 <Text style={{color: theme.colors.textColor, fontSize: 16}}>
                   Remeber Me
                 </Text>
