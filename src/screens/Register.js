@@ -19,6 +19,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {City, Country, State} from 'country-state-city';
 import DateSelector from '../components/DateSelector';
 import firestore from '@react-native-firebase/firestore';
+import ShowMessage from '../components/dialogBox/ShowMessage';
 
 const SignUpPage = ({navigation, route}) => {
   const [fullName, setFullName] = useState('');
@@ -46,10 +47,6 @@ const SignUpPage = ({navigation, route}) => {
   const [cityZIndex, setCityZIndex] = useState(2000);
   const [genderZIndex, setGenderZIndex] = useState(1000);
   const [birthDate, setBirthDate] = useState('');
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(
-    'Some error occurred. Please try again later.',
-  );
 
   const theme = useTheme();
   const {email} = route.params;
@@ -136,11 +133,9 @@ const SignUpPage = ({navigation, route}) => {
       selectedGender === '' ||
       birthDate === ''
     ) {
-      setShowError(true);
-      setErrorMessage('Please fill out all the fields!');
+      ShowMessage({message: 'Please fill out all the fields!', error: true});
       return;
     } else {
-      setShowError(false);
       try {
         setLoading(true);
         await firestore().collection('userdetail').add({
@@ -161,8 +156,10 @@ const SignUpPage = ({navigation, route}) => {
           routes: [{name: 'BottomTabNavigation'}],
         });
       } catch (error) {
-        setShowError(true);
-        setErrorMessage('Some error occurred. Please try again later.');
+        ShowMessage({
+          message: 'Some error occurred. Please try again later.',
+          error: true,
+        });
       }
     }
   };
@@ -417,13 +414,6 @@ const SignUpPage = ({navigation, route}) => {
               />
             </View>
 
-            {showError && (
-              <View className="bg-red-500 p-3 justify-center items-center rounded-md">
-                <Text className="text-white font-semibold text-sm">
-                  {errorMessage}
-                </Text>
-              </View>
-            )}
             <Button
               mode="contained"
               onPress={submitForm}

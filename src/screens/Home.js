@@ -21,8 +21,8 @@ import {sampleHospitals} from '../utils/sampleData';
 import Geolocation from '@react-native-community/geolocation';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import DoctorCard from '../components/DoctorCard';
 import HospitalCard from '../components/HospitalCard';
+import DoctorCard from '../components/DoctorCard';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -50,38 +50,75 @@ const Home = () => {
     );
   }, []);
 
-  const hospitals = [
+  const doctors = [
     {
       id: '1',
-      name: 'Apollo Hospital',
-      location: 'Kolkata',
-      rating: '4.9',
-      ratingCount: 100,
-      image: require('../assets/icons/fortis.png'),
-      bedsAvailable: 100,
+      name: 'Dr. Shraman Aiyar',
+      speciality: 'Clinical Psychologist',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/top_doctor.jpg'),
     },
     {
       id: '2',
-      name: 'AIIMS',
-      location: 'Delhi',
-      rating: '4.8',
-      ratingCount: 100,
-      image: require('../assets/icons/amri.png'),
-      bedsAvailable: 100,
+      name: 'Dr. Shraman Aiyar',
+      speciality: 'Clinical Psychologist',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/top_doctor.jpg'),
     },
     {
       id: '3',
-      name: 'Fortis Hospital',
-      location: 'Mumbai',
-      rating: '4.7',
-      ratingCount: 100,
-      image: require('../assets/icons/bppoddar.png'),
-      bedsAvailable: 100,
+      name: 'Dr. Shraman Aiyar',
+      speciality: 'Clinical Psychologist',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/top_doctor.jpg'),
+    },
+    {
+      id: '4',
+      name: 'Dr. Shraman Aiyar',
+      speciality: 'Clinical Psychologist',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/top_doctor.jpg'),
+    },
+  ];
+
+  const hospitals = [
+    {
+      id: '1',
+      name: 'AMRI HOSPITAL',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/hospital.jpeg'),
+    },
+    {
+      id: '2',
+      name: 'AMRI HOSPITAL',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/hospital.jpeg'),
+    },
+    {
+      id: '3',
+      name: 'AMRI HOSPITAL',
+      distance: '1.1',
+      rating: 4.6,
+      reviewCount: 150,
+      image: require('../assets/icons/hospital.jpeg'),
     },
   ];
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
+    <ScrollView className="flex-1 bg-gray-100 mt-8">
+      <StatusBar barStyle="dark-content" />
       <View className="p-4">
         <View className="flex-row justify-between items-center mb-4">
           <View className="flex-row items-center">
@@ -265,50 +302,33 @@ const Home = () => {
             </LinearGradient>
           </Pressable>
         </View>
+
         {/* Top Doctors Section */}
-        <Text className="text-[#125873] mt-6 font-bold text-2xl ">
-          Top Doctors
-        </Text>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={[
-            {
-              id: '1',
-              name: 'Dr. Shreya Bhaskar',
-              specialty: 'General Physician',
-              rating: '4.9',
-              image: require('../assets/icons/dr1.png'),
-            },
-            {
-              id: '2',
-              name: 'Dr. Tushar Mishra',
-              specialty: 'General Physician',
-              rating: '4.8',
-              image: require('../assets/icons/dr2.png'),
-            },
-            {
-              id: '3',
-              name: 'Dr. Priya Shukla',
-              specialty: 'General Physician',
-              rating: '4.7',
-              image: require('../assets/icons/dr1.png'),
-            },
-          ]}
-          renderItem={({item}) => <DoctorCard doctor={item} />}
-          keyExtractor={item => item.id}
-        />
+        <View>
+          <Text className="text-2xl font-bold my-6 text-[#125873]">
+            Top Hospitals
+          </Text>
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{paddingHorizontal: 16}}>
+            {hospitals.map(item => (
+              <HospitalCard key={item.id} hospital={item} />
+            ))}
+          </ScrollView>
+        </View>
+
         {/* Top Hospitals Section */}
-        <Text className="text-[#125873] mt-6 font-bold text-2xl">
-          Top Hospitals
-        </Text>
-        <ScrollView>
-          <View className="p-4 mt-8">
-            {hospitals.map((hospital, index) => (
-              <HospitalCard key={index} hospital={hospital} />
+        <View>
+          <Text className="text-2xl font-bold my-6 text-[#125873]">
+            Top Doctors
+          </Text>
+          <View>
+            {doctors.map(item => (
+              <DoctorCard key={item.id} doctor={item} />
             ))}
           </View>
-        </ScrollView>
+        </View>
       </View>
     </ScrollView>
   );
