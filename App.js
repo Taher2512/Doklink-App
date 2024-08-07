@@ -2,6 +2,8 @@
 import React from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import Navigation from './src/navigation';
+import BottomTabNavigation from './src/navigation/BottomTabNavigation';
+import { NavigationContainer } from '@react-navigation/native';
 
 function App() {
   
@@ -12,7 +14,11 @@ function App() {
         backgroundColor="transparent"
         translucent
       />
-      <Navigation/>
+      <NavigationContainer>
+      <BottomTabNavigation/>
+      </NavigationContainer>
+      {/* <Navigation/> */}
+      
       </View>
   );
 }
