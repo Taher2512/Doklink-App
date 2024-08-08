@@ -23,6 +23,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import HospitalCard from '../components/HospitalCard';
 import DoctorCard from '../components/DoctorCard';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,7 +31,7 @@ const Home = () => {
   const [currentLocation, setCurrentLocation] = useState('');
 
   const theme = useTheme();
-
+ const navigation=useNavigation();
   const handleSearch = () => {
     // For now, just log the search query
     // console.log('Searching for:', searchQuery);
@@ -254,7 +255,7 @@ const Home = () => {
             </LinearGradient>
           </Pressable>
           <Pressable
-            onPress={() => console.log('hi2')}
+            onPress={() => navigation.navigate('doctorbooking')}
             className="justify-center items-center">
             <LinearGradient
               colors={['#d9f7f7', '#d9f7f7']}
@@ -327,6 +328,7 @@ const Home = () => {
             {doctors.map(item => (
               <DoctorCard key={item.id} doctor={item} />
             ))}
+            <View style={{height:60}}/>
           </View>
         </View>
       </View>

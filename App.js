@@ -9,15 +9,15 @@ function App() {
   
   return (
     
-    <View style={{flex:1}}>
+    <View style={{flex:1,backgroundColor:'white'}}>
       <StatusBar
         backgroundColor="transparent"
         translucent
       />
-      <NavigationContainer>
+      {/* <NavigationContainer>
       <BottomTabNavigation/>
-      </NavigationContainer>
-      {/* <Navigation/> */}
+      </NavigationContainer> */}
+      <Navigation/>
       
       </View>
   );

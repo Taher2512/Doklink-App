@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import {
   Alert,
   Image,
@@ -31,12 +32,13 @@ export default function BottomTabNavigation() {
         tabBarShowLabel: false,
         headerTintColor: theme.colors.primary,
         tabBarStyle: {
-          borderTopRightRadius: 45,
-          borderTopLeftRadius: 45,
-          height: '10.5%',
+          borderTopRightRadius: 25,
+          borderTopLeftRadius: 25,
+          height: 70,
           elevation: 0,
           backgroundColor: theme.colors.secondary,
           ...styles.shadow,
+          position: 'absolute',
         },
       }}
       initialRouteName="Home">
