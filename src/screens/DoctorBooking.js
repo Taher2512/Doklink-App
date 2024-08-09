@@ -1,9 +1,10 @@
 /*eslint-disable*/
 import { Link } from '@react-navigation/native'
 import React,{useState} from 'react'
-import { StatusBar, StyleSheet, View,Text, TouchableOpacity, FlatList, Image } from 'react-native'
+import { StatusBar, StyleSheet, View,Text, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native'
 import { Button, Searchbar, useTheme } from 'react-native-paper'
 import DocAppointHorizontalCard from '../components/DocAppointHorizontalCard'
+import DocAppointVerticalCard from '../components/DocAppointVerticalCard'
 
 
 export default function DoctorBooking() {
@@ -37,14 +38,23 @@ let data=[
   }
 ]
 let doctorapoointment=[
+  {id:'left-space'},
+  {id:0},
+  {id:1},
+  {id:2},
+  {id:3},
+  {id:'right-spacer'}
+]
+let recommendedDoctors=[
   {id:0},
   {id:1},
   {id:2},
   {id:3}
 ]
   return (
-    <View style={[style.container,{paddingTop:StatusBar.currentHeight+20,padding:20}]}>
-         <Searchbar
+    <View style={{flex:1,backgroundColor:'white'}}>
+    <View style={{paddingTop:StatusBar.currentHeight+20,backgroundColor:theme.colors.secondary,borderBottomLeftRadius:25,borderBottomRightRadius:25}}>
+    <Searchbar
           placeholder="Search location"
           icon={'map-marker-radius'}
           onChangeText={setsearchquery}
@@ -56,8 +66,13 @@ let doctorapoointment=[
             borderColor: theme.colors.secondary,
             borderWidth: 2,
             backgroundColor: theme.colors.tertiary,
+           marginHorizontal:20
           }}
         />
+    </View>
+    
+        <ScrollView contentContainerStyle={{ alignItems:"center",justifyContent:'flex-start',gap:15}} style={[style.container,]}>
+        <View style={{paddingHorizontal:20,width:'100%',alignItems:'center',justifyContent:'flex-start',gap:15}}>
         <View style={style.card}>
           <View style={style.cardleft}>
              <Text style={style.cardtext}>Book And</Text>
@@ -72,8 +87,9 @@ let doctorapoointment=[
         <View style={{width:"100%",flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
              <Text style={{fontSize:25,color:theme.colors.textColor,fontWeight:'bold'}}>Categories</Text>
              <Link to='/doctorbooking'><Text style={{color:theme.colors.textColor,fontSize:17}}>View All</Text></Link>
-        </View>    
-        <View style={{height:110}}>
+        </View>  
+ 
+           <View style={{height:110}}>
         <FlatList
         data={data}
         horizontal
@@ -88,8 +104,9 @@ let doctorapoointment=[
           </View>
         )}
        />
-        </View>   
-      <View style={{width:'100%'}}>
+        </View>  
+        </View> 
+      <View style={{width:'100%',paddingHorizontal:20}}>
        <Text style={{fontSize:23,fontWeight:"bold",color:theme.colors.textColor}}>Upcoming Appointments</Text>
        </View>
        <View style={{height:150}}>
@@ -99,25 +116,33 @@ let doctorapoointment=[
         keyExtractor={item=>item.id.toString()}
         ItemSeparatorComponent={()=><View style={{width:10}}/>}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item,index})=>(
+        renderItem={({item,index})=>{
+          if(item.id=='left-space'||item.id=='right-spacer'){
+            return<View style={{width:10}}/>
+          }
+          return(
           <DocAppointHorizontalCard/>
-        )}
+        )}}
        />
+       {/* <View style={{width:20}}/> */}
        </View>
-       <View style={{width:'100%'}}>
+       <View style={{width:'100%',paddingHorizontal:20}}>
        <Text style={{fontSize:23,fontWeight:"bold",color:theme.colors.textColor}}>Recommended Doctors</Text>
        </View>
-        
+       {recommendedDoctors&&recommendedDoctors.map((item,index)=>(
+        <DocAppointVerticalCard/>
+       ))}
+       <View style={{height:50}}/>
+    </ScrollView>
     </View>
+   
   )
 }
 const style=StyleSheet.create({
   container:{
     flex:1,
     backgroundColor:'white',
-    alignItems:"center",
     gap:15,
-    justifyContent:'flex-start'
 
   },
   card:{
@@ -129,7 +154,7 @@ const style=StyleSheet.create({
     justifyContent:'space-between',
     alignItems:'center',
     padding:15,
-     marginTop:15
+     marginTop:25
   },
   cardleft:{
     height:"100%",
