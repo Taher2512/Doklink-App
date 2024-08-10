@@ -110,7 +110,7 @@ export default function SignIn() {
                       used: 0,
                     });
                   setLoading(false);
-                  navigation.navigate('otpVerification', {
+                  navigation.navigate('OtpVerification', {
                     email,
                     otp: res.data.otp,
                   });

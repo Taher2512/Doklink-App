@@ -14,7 +14,7 @@ import SignIn from '../screens/SignIn';
 import Onboarding from '../screens/Onboarding';
 import Home from '../screens/Home';
 import BedBooking from '../screens/BedBooking';
-import DoctorBooking from '../screens/DoctorBooking';
+import DoctorAppointment from '../screens/DoctorAppointment';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +28,7 @@ const StackNavigation = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         })}
-        initialRouteName={'doctorbooking'}>
+        initialRouteName={'BottomTabNavigation'}>
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
@@ -48,9 +48,8 @@ const StackNavigation = () => {
           name="BottomTabNavigation"
           component={BottomTabNavigation}
         />
-        <Stack.Screen name="otpVerification" component={OtpVerification} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name='doctorbooking' component={DoctorBooking}/>
+        <Stack.Screen name="OtpVerification" component={OtpVerification} />
+        <Stack.Screen name="DoctorAppointment" component={DoctorAppointment} />
       </Stack.Navigator>
     </NavigationContainer>
   );

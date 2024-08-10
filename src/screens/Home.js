@@ -23,7 +23,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import HospitalCard from '../components/HospitalCard';
 import DoctorCard from '../components/DoctorCard';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,7 +31,7 @@ const Home = () => {
   const [currentLocation, setCurrentLocation] = useState('');
 
   const theme = useTheme();
- const navigation=useNavigation();
+  const navigation = useNavigation();
   const handleSearch = () => {
     // For now, just log the search query
     // console.log('Searching for:', searchQuery);
@@ -118,8 +118,7 @@ const Home = () => {
   ];
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 mt-8">
-      <StatusBar barStyle="dark-content" />
+    <ScrollView className="flex-1 bg-gray-100">
       <View className="p-4">
         <View className="flex-row justify-between items-center mb-4">
           <View className="flex-row items-center">
@@ -179,7 +178,7 @@ const Home = () => {
           Current location: 123 Main St., Kolkata - 700016
         </Text>
         <LinearGradient
-          colors={['#93c5fd', '#60a5fa','#2563eb','#1e40af']}
+          colors={['#93c5fd', '#60a5fa', '#2563eb', '#1e40af']}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
           className="flex-row justify-end items-center w-full h-32 mt-10 rounded-lg"
@@ -255,7 +254,7 @@ const Home = () => {
             </LinearGradient>
           </Pressable>
           <Pressable
-            onPress={() => navigation.navigate('doctorbooking')}
+            onPress={() => navigation.navigate('DoctorAppointment')}
             className="justify-center items-center">
             <LinearGradient
               colors={['#d9f7f7', '#d9f7f7']}
@@ -328,7 +327,7 @@ const Home = () => {
             {doctors.map(item => (
               <DoctorCard key={item.id} doctor={item} />
             ))}
-            <View style={{height:60}}/>
+            <View style={{height: 60}} />
           </View>
         </View>
       </View>
