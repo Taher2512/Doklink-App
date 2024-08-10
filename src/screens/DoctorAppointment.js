@@ -44,7 +44,7 @@ export default function DoctorAppointment() {
       image: require('../assets/icons/dental.png'),
     },
   ];
-  let doctorapoointment = [
+  let doctorAppointmentData = [
     {id: 'left-space'},
     {id: 0},
     {id: 1},
@@ -194,7 +194,7 @@ export default function DoctorAppointment() {
         </View>
         <View style={{height: 150}}>
           <FlatList
-            data={doctorapoointment}
+            data={doctorAppointmentData}
             horizontal
             keyExtractor={item => item.id.toString()}
             ItemSeparatorComponent={() => <View style={{width: 10}} />}
