@@ -178,7 +178,7 @@ const Home = () => {
           Current location: 123 Main St., Kolkata - 700016
         </Text>
         <LinearGradient
-          colors={['#93c5fd', '#60a5fa', '#2563eb', '#1e40af']}
+          colors={['#d9f7f7', '#125970', '#125873']}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
           className="flex-row justify-end items-center w-full h-32 mt-10 rounded-lg"

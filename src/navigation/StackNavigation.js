@@ -15,6 +15,7 @@ import Onboarding from '../screens/Onboarding';
 import Home from '../screens/Home';
 import BedBooking from '../screens/BedBooking';
 import DoctorAppointment from '../screens/DoctorAppointment';
+import HospitalInfo from '../screens/HospitalInfo';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,11 @@ const StackNavigation = () => {
         <Stack.Screen
           name="SignIn"
           component={SignIn}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="HospitalInfo"
+          component={HospitalInfo}
           options={{headerShown: false}}
         />
         <Stack.Screen
