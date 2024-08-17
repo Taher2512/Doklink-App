@@ -1,14 +1,12 @@
-/*eslint-disable*/
+import React from 'react';
 import {
-  Alert,
-  Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { useTheme } from 'react-native-paper';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/Home';
 import Settings from '../screens/Settings';
 import Profile from '../screens/Profile';
@@ -25,48 +23,25 @@ export default function BottomTabNavigation() {
         headerShown: true,
         headerStyle: {
           backgroundColor: theme.colors.secondary,
-          borderBottomWidth: 1,
-          borderBottomColor: '#ccc',
+          elevation: 0,
+          shadowOpacity: 0,
         },
         headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontWeight: 'normal',
+          fontSize: 18,
+        },
         tabBarShowLabel: false,
         headerTintColor: theme.colors.primary,
-        tabBarStyle: {
-          borderTopRightRadius: 25,
-          borderTopLeftRadius: 25,
-          height: 70,
-          elevation: 0,
-          backgroundColor: theme.colors.secondary,
-          ...styles.shadow,
-          position: 'absolute',
-        },
+        tabBarStyle: styles.tabBar,
       }}
       initialRouteName="Home">
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({focused}) => (
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Image
-                source={require('../assets/icons/portfolio.png')}
-                resizeMode="contain"
-                style={{
-                  width: 32,
-                  height: 32,
-                  tintColor: '#fff',
-                }}
-              />
-
-              <Text
-                style={{
-                  fontWeight: focused ? 700 : 400,
-                  color: focused ? '#fff' : '#fff',
-                  fontSize: 12,
-                }}>
-                Home
-              </Text>
-            </View>
+          tabBarIcon: ({focused, color, size}) => (
+            <TabBarIcon focused={focused} iconName="home" color={color} size={size} />
           ),
         }}
       />
@@ -74,27 +49,8 @@ export default function BottomTabNavigation() {
         name="Settings"
         component={Settings}
         options={{
-          tabBarIcon: ({focused}) => (
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Image
-                source={require('../assets/icons/portfolio.png')}
-                resizeMode="contain"
-                style={{
-                  width: 32,
-                  height: 32,
-                  tintColor: '#fff',
-                }}
-              />
-
-              <Text
-                style={{
-                  fontWeight: focused ? 700 : 400,
-                  color: focused ? '#fff' : '#fff',
-                  fontSize: 12,
-                }}>
-                Settings
-              </Text>
-            </View>
+          tabBarIcon: ({focused, color, size}) => (
+            <TabBarIcon focused={focused} iconName="settings" color={color} size={size} />
           ),
         }}
       />
@@ -102,27 +58,8 @@ export default function BottomTabNavigation() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({focused}) => (
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Image
-                source={require('../assets/icons/portfolio.png')}
-                resizeMode="contain"
-                style={{
-                  width: 32,
-                  height: 32,
-                  tintColor: '#fff',
-                }}
-              />
-
-              <Text
-                style={{
-                  fontWeight: focused ? 700 : 400,
-                  color: focused ? '#fff' : '#fff',
-                  fontSize: 12,
-                }}>
-                Profile
-              </Text>
-            </View>
+          tabBarIcon: ({focused, color, size}) => (
+            <TabBarIcon focused={focused} iconName="person" color={color} size={size} />
           ),
         }}
       />
@@ -130,8 +67,28 @@ export default function BottomTabNavigation() {
   );
 }
 
+const TabBarIcon = ({ focused, iconName, color, size }) => (
+  <View style={styles.tabBarItemContainer}>
+    <View style={[styles.iconContainer, focused ? styles.iconContainerFocused : null]}>
+      <Icon
+        name={iconName}
+        size={size}
+        color={focused ? '#FFFFFF' : color}
+      />
+    </View>
+  </View>
+);
+
 const styles = StyleSheet.create({
-  shadow: {
+  tabBar: {
+    position: 'absolute',
+    bottom: 25,
+    left: 20,
+    right: 20,
+    elevation: 0,
+    backgroundColor: '#cfd8dc',
+    borderRadius: 15,
+    height: 70,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -139,6 +96,21 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
-    elevation: 5,
+  },
+  tabBarItemContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#F0F0F0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5,
+  },
+  iconContainerFocused: {
+    backgroundColor: '#125873',
   },
 });

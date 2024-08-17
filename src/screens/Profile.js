@@ -31,7 +31,7 @@ const Profile = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <ScrollView className="flex-1">
-        <View className="bg-blue-500 pt-10 pb-20 rounded-b-3xl" style={{backgroundColor:theme.colors.secondary}}>
+        <View className="bg-blue-500 pt-6 pb-20 rounded-b-3xl" style={{backgroundColor:theme.colors.secondary}}>
           <View className="flex-row items-center justify-between px-4">
             <View className="flex-row items-center">
               <Avatar.Image
