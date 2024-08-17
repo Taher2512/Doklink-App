@@ -1,55 +1,30 @@
-/*eslint-disable*/
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
-  FlatList,
+  ScrollView,
   Image,
   Text,
   Pressable,
   StatusBar,
-  ScrollView,
+  Dimensions,
 } from 'react-native';
-import {
-  Card,
-  Button,
-  Searchbar,
-  useTheme,
-  IconButton,
-  TouchableRipple,
-} from 'react-native-paper';
-import {sampleHospitals} from '../utils/sampleData';
-import Geolocation from '@react-native-community/geolocation';
+import {Searchbar, useTheme} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
+import DatePicker from 'react-native-date-picker';
 import HospitalCard from '../components/HospitalCard';
 import DoctorCard from '../components/DoctorCard';
-import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const {width} = Dimensions.get('window');
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [nearbyHospitals, setNearbyHospitals] = useState(sampleHospitals);
-  const [currentLocation, setCurrentLocation] = useState('');
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const theme = useTheme();
   const navigation = useNavigation();
-  const handleSearch = () => {
-    // For now, just log the search query
-    // console.log('Searching for:', searchQuery);
-    // In a real app, you would filter the hospitals based on the search query
-  };
-
-  useEffect(() => {
-    // Get current location when component mounts
-    Geolocation.getCurrentPosition(
-      position => {
-        setCurrentLocation(position.coords);
-        console.log('Current location:', position.coords);
-        // fetchNearbyHospitals(position.coords);
-      },
-      error => console.log(error),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-    );
-  }, []);
 
   const doctors = [
     {
@@ -118,221 +93,205 @@ const Home = () => {
   ];
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
-      <View className="p-4">
-        <View className="flex-row justify-between items-center mb-4">
-          <View className="flex-row items-center">
-            <Image
-              source={require('../assets/logos/logo-blue.png')}
-              className="h-16 w-16"
-              tintColor={theme.colors.secondary}
-            />
-            <Text
-              className="font-bold mb-2 text-2xl"
-              style={{color: theme.colors.secondary}}>
-              DOKLINK
+    <ScrollView style={{flex: 1, backgroundColor: '#f0f4f8'}}>
+      <StatusBar backgroundColor="#125873" barStyle="light-content" />
+
+      {/* Header */}
+      <LinearGradient
+        colors={['#125873', '#1a7fa0']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}>
+        <View style={{padding: 20, paddingTop: 20, paddingBottom: 30}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 20,
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image
+                source={require('../assets/logos/logo-blue.png')}
+                style={{width: 40, height: 40, tintColor: '#fff'}}
+              />
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 28,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                }}>
+                DOKLINK
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Pressable onPress={() => setOpen(true)} style={{marginRight: 20}}>
+                <Icon name="calendar-month" size={28} color="#fff" />
+              </Pressable>
+              <Pressable onPress={() => {}}>
+                <Icon name="bell-ring" size={28} color="#fff" />
+              </Pressable>
+            </View>
+          </View>
+
+          <Searchbar
+            placeholder="Search doctors, hospitals..."
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+            style={{borderRadius: 30, backgroundColor: '#fff', elevation: 5}}
+            iconColor="#125873"
+          />
+
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+            <Icon name="map-marker" size={24} color="#fff" />
+            <Text style={{color: '#fff', marginLeft: 5, fontSize: 16}}>
+              123 Main St., Kolkata - 700016
             </Text>
           </View>
-          <View className="flex-row">
-            <IconButton
-              icon="calendar-month"
-              mode="contained"
-              size={23}
-              iconColor={theme.colors.secondary}
-              containerColor={theme.colors.tertiary}
-              style={{
-                borderWidth: 1,
-                borderColor: theme.colors.secondary,
-              }}
-              onPress={() => console.log('Pressed')}
-            />
-            <IconButton
-              icon="bell-ring"
-              mode="contained"
-              size={23}
-              iconColor={theme.colors.secondary}
-              containerColor={theme.colors.tertiary}
-              style={{borderWidth: 1, borderColor: theme.colors.secondary}}
-              onPress={() => console.log('Pressed')}
-            />
-          </View>
         </View>
-        <Searchbar
-          placeholder="Search location"
-          icon={'map-marker-radius'}
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-          onSubmitEditing={handleSearch}
-          cursorColor={theme.colors.secondary}
-          className="mb-2"
-          style={{
-            borderColor: theme.colors.secondary,
-            borderWidth: 2,
-            backgroundColor: theme.colors.tertiary,
-          }}
-        />
-        <Text variant="bodyMedium" className="text-gray-600">
-          {/* Current location:{' '} */}
-          {/* {currentLocation ? currentLocation.latitude.toFixed(4) : 'N/A'},{' '}
-          {currentLocation ? currentLocation.longitude.toFixed(4) : 'N/A'} */}
-          Current location: 123 Main St., Kolkata - 700016
-        </Text>
+      </LinearGradient>
+
+      {/* Main Content */}
+      <View style={{padding: 20}}>
+        {/* Banner */}
         <LinearGradient
-          colors={['#d9f7f7', '#125970', '#125873']}
+          colors={['#125873', '#1a7fa0']}
           start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
-          className="flex-row justify-end items-center w-full h-32 mt-10 rounded-lg"
+          end={{x: 1, y: 1}}
           style={{
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 10,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.5,
-            elevation: 15,
+            borderRadius: 15,
+            paddingHorizontal: 24,
+            marginBottom: 30,
+            elevation: 5,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}>
+          <View style={{flex: 1}}>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 20,
+                fontWeight: 'semibold',
+                marginBottom: 6,
+              }}>
+              Your EXCELLENT care
+            </Text>
+            <Text style={{color: '#fff', fontSize: 20, fontWeight: 'semibold'}}>
+              is our SPECIALITY
+            </Text>
+          </View>
           <Image
             source={require('../assets/icons/banner-1.png')}
-            className="absolute left-4 h-36 w-36 -top-4"
+            style={{width: 120, height: 120, resizeMode: 'contain'}}
           />
-          <Text className="text-white w-1/2 font-bold text-lg mr-3 text-left">
-            Your EXCELLENT care{'\n'} is our SPECIALITY
-          </Text>
         </LinearGradient>
-        <Text className="text-[#125873] mt-6 font-bold text-2xl">
+
+        {/* Services */}
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#125873',
+            marginBottom: 20,
+          }}>
           Our Services
         </Text>
-        <View className="flex-row justify-around mt-4">
-          <Pressable
-            onPress={() => console.log('hi')}
-            className="justify-center items-center">
-            <LinearGradient
-              colors={['#d9f7f7', '#d9f7f7']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              className="h-28 w-40 rounded-lg justify-center items-center"
-              style={{
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 10,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.5,
-                elevation: 15,
-                flexDirection: 'row',
-                backgroundColor: '#d9f7f7',
-                justifyContent: 'flex-start',
-                paddingLeft: 10,
-              }}>
-              <View style={{width: '40%', height: '100%', paddingTop: 10}}>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 100,
-                  }}>
-                  Bed
-                </Text>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 100,
-                  }}>
-                  Booking
-                </Text>
-              </View>
-              <Image
-                source={require('../assets/icons/bed-booking-banner.png')}
-                className="h-28 w-28 absolute"
-                style={{resizeMode: 'contain', left: 60, top: 20}}
-              />
-            </LinearGradient>
-          </Pressable>
-          <Pressable
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <ServiceCard
+            title="Bed Booking"
+            icon="bed-empty"
+            onPress={() => console.log('Bed Booking')}
+          />
+          <ServiceCard
+            title="Doctor Appointment"
+            icon="doctor"
             onPress={() => navigation.navigate('DoctorAppointment')}
-            className="justify-center items-center">
-            <LinearGradient
-              colors={['#d9f7f7', '#d9f7f7']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              className="h-28 w-40 rounded-lg justify-center items-center"
-              style={{
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 10,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.5,
-                elevation: 15,
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                paddingLeft: 10,
-              }}>
-              <View style={{width: '60%', height: '100%', paddingTop: 10}}>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 100,
-                  }}>
-                  Doctor
-                </Text>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 110,
-                  }}>
-                  Appointment
-                </Text>
-              </View>
-              <Image
-                source={require('../assets/icons/doctor-appointment-banner.png')}
-                className="h-28 w-24 absolute"
-                style={{resizeMode: 'contain', left: 95}}
-              />
-            </LinearGradient>
-          </Pressable>
+          />
         </View>
 
-        {/* Top Doctors Section */}
-        <View>
-          <Text className="text-2xl font-bold my-6 text-[#125873]">
-            Top Hospitals
-          </Text>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{paddingHorizontal: 16}}>
-            {hospitals.map(item => (
-              <HospitalCard key={item.id} hospital={item} />
-            ))}
-          </ScrollView>
-        </View>
+        {/* Top Hospitals */}
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#125873',
+            marginTop: 40,
+            marginBottom: 20,
+          }}>
+          Top Hospitals
+        </Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{paddingRight: 20}}>
+          {hospitals.map(hospital => (
+            <HospitalCard key={hospital.id} hospital={hospital} />
+          ))}
+        </ScrollView>
 
-        {/* Top Hospitals Section */}
-        <View>
-          <Text className="text-2xl font-bold my-6 text-[#125873]">
-            Top Doctors
-          </Text>
-          <View>
-            {doctors.map(item => (
-              <DoctorCard key={item.id} doctor={item} />
-            ))}
-            <View style={{height: 60}} />
-          </View>
-        </View>
+        {/* Top Doctors */}
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#125873',
+            marginTop: 40,
+            marginBottom: 20,
+          }}>
+          Top Doctors
+        </Text>
+        {doctors.map(doctor => (
+          <DoctorCard key={doctor.id} doctor={doctor} />
+        ))}
       </View>
+
+      {/* DatePicker */}
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false);
+          setDate(date);
+          // You can handle the selected date here
+        }}
+        onCancel={() => {
+          setOpen(false);
+        }}
+      />
     </ScrollView>
   );
 };
+
+const ServiceCard = ({title, icon, onPress}) => (
+  <Pressable onPress={onPress} style={{width: '48%'}}>
+    <LinearGradient
+      colors={['#ffffff', '#e6f7ff']}
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 1}}
+      style={{
+        borderRadius: 15,
+        padding: 20,
+        height: 120,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+      }}>
+      <Icon name={icon} size={50} color="#125873" />
+      <Text
+        style={{
+          marginTop: 5,
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: '#125873',
+          textAlign: 'center',
+        }}>
+        {title}
+      </Text>
+    </LinearGradient>
+  </Pressable>
+);
 
 export default Home;
