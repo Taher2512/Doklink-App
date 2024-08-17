@@ -24,7 +24,7 @@ const EditProfile = ({route, navigation}) => {
 
   return (
     <ScrollView className="flex-1 bg-gray-100">
-      <View className=" pt-16 pb-20 rounded-b-3xl items-center" style={{backgroundColor:theme.colors.secondary}} >
+      <View className="pt-16 pb-20 rounded-b-3xl items-center" style={{backgroundColor:theme.colors.secondary}}>
         <View className="relative">
           <Avatar.Image size={120} source={{uri: userData.profilePicUrl}} />
           <TouchableOpacity
@@ -53,10 +53,46 @@ const EditProfile = ({route, navigation}) => {
             icon="email"
           />
           <CustomInput
-            label="Phone"
+            label="Mobile No."
             value={userData.phone}
             onChangeText={text => handleChange('phone', text)}
             icon="phone"
+          />
+          <CustomInput
+            label="Country"
+            value={userData.country}
+            onChangeText={text => handleChange('country', text)}
+            icon="map-marker"
+          />
+          <CustomInput
+            label="State"
+            value={userData.state}
+            onChangeText={text => handleChange('state', text)}
+            icon="city"
+          />
+          <CustomInput
+            label="City"
+            value={userData.city}
+            onChangeText={text => handleChange('city', text)}
+            icon="home-city"
+          />
+          <CustomInput
+            label="ZIP Code"
+            value={userData.zipCode}
+            onChangeText={text => handleChange('zipCode', text)}
+            icon="zip-box"
+          />
+          <CustomInput
+            label="Gender"
+            value={userData.gender}
+            onChangeText={text => handleChange('gender', text)}
+            icon="gender-male-female"
+          />
+          <CustomInput
+            label="Date of Birth"
+            value={userData.dateOfBirth}
+            onChangeText={text => handleChange('dateOfBirth', text)}
+            icon="cake-variant"
           />
         </View>
 
@@ -98,7 +134,7 @@ const EditProfile = ({route, navigation}) => {
           contentStyle={{paddingVertical: 8}}
           labelStyle={{fontSize: 16}}
           style={{backgroundColor: theme.colors.secondary}}
-          >
+        >
           Save Changes
         </Button>
       </View>
