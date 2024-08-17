@@ -16,6 +16,9 @@ import Home from '../screens/Home';
 import BedBooking from '../screens/BedBooking';
 import DoctorAppointment from '../screens/DoctorAppointment';
 import HospitalInfo from '../screens/HospitalInfo';
+import Profile from '../screens/Profile';
+import EditProfile from '../screens/EditProfile';
+
 
 const Stack = createStackNavigator();
 
@@ -53,6 +56,14 @@ const StackNavigation = () => {
         <Stack.Screen
           name="BottomTabNavigation"
           component={BottomTabNavigation}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
         />
         <Stack.Screen name="OtpVerification" component={OtpVerification} />
         <Stack.Screen name="DoctorAppointment" component={DoctorAppointment} />
