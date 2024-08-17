@@ -19,11 +19,11 @@ export default function BedBookingHorizontalCard({width}) {
               <View style={{height:'100%',width:"100%"}}>
                 <Text style={{fontSize:20,fontWeight:'bold',color:'black'}}>Fortis Hospital</Text>
                 <View style={{flexDirection:'row',gap:4,alignItems:'center'}}>
-                <Image style={{height:20,width:20}} source={require('../assets/icons/location1.png')}/>
+                <Image style={{height:18,width:18}} source={require('../assets/icons/location1.png')}/>
                 <Text style={{fontSize:13,fontWeight:'normal',color:'grey'}}>730, Eastern Metropolitan Bypass Rd, Anandapur</Text>
                 </View>
                 <View style={{flexDirection:'row',gap:4,alignItems:'center'}}>
-                <Image style={{height:25,width:25}} source={require('../assets/icons/star.png')}/>
+                <Image style={{height:20,width:20}} source={require('../assets/icons/star.png')}/>
                 <Text style={{fontSize:15,fontWeight:'normal',color:'black'}}>4.5</Text>
                 </View>
               </View>
@@ -35,12 +35,12 @@ export default function BedBookingHorizontalCard({width}) {
 const style=StyleSheet.create({
     container:{
         backgroundColor:'white',
-        // elevation:7,
+        elevation:7,
         borderRadius:15,
         padding:2,
-        height:300,
+        height:280,
         borderWidth:0.3,
-        borderColor:'lightgray'
+        borderColor:'lightgray',
     },
     innercard:{
         width:'100%'
@@ -51,7 +51,7 @@ const style=StyleSheet.create({
         // justifyContent:'flex-end',
         resizeMode:'cover',
         padding:15,
-       height:200,
+       height:180,
        alignItems:'flex-start',
        flexDirection:'row',
          justifyContent:'space-between'

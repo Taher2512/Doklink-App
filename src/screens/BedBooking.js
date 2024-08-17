@@ -5,6 +5,7 @@ import { Card, Searchbar, useTheme } from 'react-native-paper';
 import Geolocation from '@react-native-community/geolocation';
 import { ScrollView } from 'react-native-gesture-handler';
 import BedBookingHorizontalCard from '../components/BedBookingHorizontalCard';
+import BedBookingVerticalCard from '../components/BedBookingVerticalCard';
 const {width,height}=Dimensions.get('window')
 const BedBooking = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,6 +41,33 @@ const BedBooking = () => {
       id: 'right-spacer',
     },
   ]);
+  const [popularHospitals, setpopularHospitals] = useState([
+    {
+      id: '1',
+      name: 'City Hospital',
+      address: '123, XYZ Street, ABC City',
+      availableBeds: 10,
+      distance: '2 km',
+      image: 'https://picsum.photos/700',
+    },
+    {
+      id: '2',
+      name: 'Town Hospital',
+      address: '456, PQR Street, DEF City',
+      availableBeds: 5,
+      distance: '5 km',
+      image: 'https://picsum.photos/700',
+    },
+    {
+      id: '3',
+      name: 'Village Hospital',
+      address: '789, LMN Street, GHI City',
+      availableBeds: 3,
+      distance: '10 km',
+      image: 'https://picsum.photos/700', 
+    },
+   
+  ])
   const [currentLocation, setCurrentLocation] = useState('');
   const theme = useTheme();
 
@@ -98,7 +126,7 @@ const BedBooking = () => {
       <View style={{width:'100%',padding:20}}>
        <Text style={{fontSize:25,fontWeight:'bold',color:'black'}}>Nearby Hospitals</Text>
       </View>
-      <View style={{height:320}}>
+      <View style={{height:300}}>
        <FlatList
          data={nearbyHospitals}
         horizontal
@@ -111,12 +139,21 @@ const BedBooking = () => {
           }
           return(
           // <DocAppointHorizontalCard/>
-          <BedBookingHorizontalCard width={width*0.65}/>
+          <BedBookingHorizontalCard width={width*0.60}/>
         )}}
        />
-       {/* <View style={{width:20}}/> */}
        </View>
-       
+        <View style={{width:'100%',paddingHorizontal:20,gap:15}}>
+      {
+        
+        popularHospitals&&popularHospitals.map((item,index)=>{
+           return(
+            <BedBookingVerticalCard key={index}/>
+           )
+        })
+      }
+      <View style={{height:20}}/>
+      </View>
     </ScrollView>
     </View>
   );
