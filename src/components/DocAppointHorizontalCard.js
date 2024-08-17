@@ -18,7 +18,7 @@ export default function DocAppointHorizontalCard({data}) {
         <View style={styles.lowerCard}>
          <View style={styles.lowerinner}>
             <Image source={require('../assets/icons/hospitalicon.png')}/>
-            <Text style={{color:theme.colors.primary,fontSize:15,fontWeight:'normal',textAlign:'center'}}>Kothari Hospital</Text>
+            <Text style={{color:theme.colors.primary,fontSize:14,fontWeight:'normal',textAlign:'center'}}>Kothari Hospital</Text>
          </View>
          <View style={{height:50,gap:2,alignItems:"center"}}>
            <View style={{height:"50%",width:2,backgroundColor:theme.colors.primary}}/>
@@ -27,8 +27,8 @@ export default function DocAppointHorizontalCard({data}) {
          <View style={styles.lowerinner}>
             <Image source={require('../assets/icons/time.png')} />
             <View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{color:theme.colors.primary,fontSize:15,fontWeight:'normal',textAlign:'center'}}>04:00 PM</Text>
-            <Text style={{color:theme.colors.primary,fontSize:15,fontWeight:'normal',textAlign:'center'}}>Mon,Aug 5</Text>
+            <Text style={{color:theme.colors.primary,fontSize:14,fontWeight:'normal',textAlign:'center'}}>04:00 PM</Text>
+            <Text style={{color:theme.colors.primary,fontSize:14,fontWeight:'normal',textAlign:'center'}}>Mon,Aug 5</Text>
             </View>
          </View>
         </View>

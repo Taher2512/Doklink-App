@@ -38,7 +38,7 @@ let data=[
   }
 ]
 let doctorapoointment=[
-  {id:'left-space'},
+  {id:'left-spacer'},
   {id:0},
   {id:1},
   {id:2},
@@ -117,7 +117,7 @@ let recommendedDoctors=[
         ItemSeparatorComponent={()=><View style={{width:10}}/>}
         showsHorizontalScrollIndicator={false}
         renderItem={({item,index})=>{
-          if(item.id=='left-space'||item.id=='right-spacer'){
+          if(item.id=='left-spacer'||item.id=='right-spacer'){
             return<View style={{width:10}}/>
           }
           return(
@@ -130,7 +130,7 @@ let recommendedDoctors=[
        <Text style={{fontSize:23,fontWeight:"bold",color:theme.colors.textColor}}>Recommended Doctors</Text>
        </View>
        {recommendedDoctors&&recommendedDoctors.map((item,index)=>(
-        <DocAppointVerticalCard/>
+        <DocAppointVerticalCard key={index} />
        ))}
        <View style={{height:50}}/>
     </ScrollView>
