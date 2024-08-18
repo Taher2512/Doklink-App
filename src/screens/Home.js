@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   ScrollView,
@@ -7,16 +7,17 @@ import {
   Pressable,
   StatusBar,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
-import {Searchbar, useTheme} from 'react-native-paper';
+import { Searchbar, useTheme } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 import HospitalCard from '../components/HospitalCard';
 import DoctorCard from '../components/DoctorCard';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -93,112 +94,60 @@ const Home = () => {
   ];
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: '#f0f4f8'}}>
+    <ScrollView style={styles.container}>
       <StatusBar backgroundColor="#125873" barStyle="light-content" />
 
       {/* Header */}
-      <LinearGradient
-        colors={['#125873', '#1a7fa0']}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}>
-        <View style={{padding: 20, paddingTop: 20, paddingBottom: 30}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 20,
-            }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/logos/logo-blue.png')}
-                style={{width: 40, height: 40, tintColor: '#fff'}}
-              />
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 28,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                }}>
-                DOKLINK
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <Pressable onPress={() => setOpen(true)} style={{marginRight: 20}}>
-                <Icon name="calendar-month" size={28} color="#fff" />
-              </Pressable>
-              <Pressable onPress={() => {}}>
-                <Icon name="bell-ring" size={28} color="#fff" />
-              </Pressable>
-            </View>
+      <LinearGradient colors={['#125873', '#1a7fa0']} style={styles.header}>
+        <View style={styles.headerContent}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require('../assets/logos/logo-blue.png')}
+              style={styles.logo}
+            />
+            <Text style={styles.logoText}>DOKLINK</Text>
           </View>
-
-          <Searchbar
-            placeholder="Search doctors, hospitals..."
-            onChangeText={setSearchQuery}
-            value={searchQuery}
-            style={{borderRadius: 30, backgroundColor: '#fff', elevation: 5}}
-            iconColor="#125873"
-          />
-
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
-            <Icon name="map-marker" size={24} color="#fff" />
-            <Text style={{color: '#fff', marginLeft: 5, fontSize: 16}}>
-              123 Main St., Kolkata - 700016
-            </Text>
+          <View style={styles.headerIcons}>
+            <Pressable onPress={() => setOpen(true)} style={styles.iconButton}>
+              <Icon name="calendar-month" size={24} color="#fff" />
+            </Pressable>
+            <Pressable onPress={() => {}} style={styles.iconButton}>
+              <Icon name="bell-ring" size={24} color="#fff" />
+            </Pressable>
           </View>
+        </View>
+
+        <Searchbar
+          placeholder="Search doctors, hospitals..."
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+          style={styles.searchBar}
+          iconColor="#125873"
+        />
+
+        <View style={styles.locationContainer}>
+          <Icon name="map-marker" size={20} color="#fff" />
+          <Text style={styles.locationText}>123 Main St., Kolkata - 700016</Text>
         </View>
       </LinearGradient>
 
       {/* Main Content */}
-      <View style={{padding: 20}}>
+      <View style={styles.content}>
         {/* Banner */}
-        <LinearGradient
-          colors={['#125873', '#1a7fa0']}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 1}}
-          style={{
-            borderRadius: 15,
-            paddingHorizontal: 24,
-            marginBottom: 30,
-            elevation: 5,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <View style={{flex: 1}}>
-            <Text
-              style={{
-                color: '#fff',
-                fontSize: 20,
-                fontWeight: 'semibold',
-                marginBottom: 6,
-              }}>
-              Your EXCELLENT care
-            </Text>
-            <Text style={{color: '#fff', fontSize: 20, fontWeight: 'semibold'}}>
-              is our SPECIALITY
-            </Text>
+        <LinearGradient colors={['#125873', '#1a7fa0']} style={styles.banner}>
+          <View style={styles.bannerContent}>
+            <Text style={styles.bannerTitle}>Your EXCELLENT care</Text>
+            <Text style={styles.bannerSubtitle}>is our SPECIALITY</Text>
           </View>
           <Image
             source={require('../assets/icons/banner-1.png')}
-            style={{width: 120, height: 120, resizeMode: 'contain'}}
+            style={styles.bannerImage}
           />
         </LinearGradient>
 
         {/* Services */}
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-            color: '#125873',
-            marginBottom: 20,
-          }}>
-          Our Services
-        </Text>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={styles.sectionTitle}>Our Services</Text>
+        <View style={styles.servicesContainer}>
           <ServiceCard
             title="Bed Booking"
             icon="bed-empty"
@@ -212,36 +161,18 @@ const Home = () => {
         </View>
 
         {/* Top Hospitals */}
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-            color: '#125873',
-            marginTop: 40,
-            marginBottom: 20,
-          }}>
-          Top Hospitals
-        </Text>
+        <Text style={styles.sectionTitle}>Top Hospitals</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{paddingRight: 20}}>
+          contentContainerStyle={styles.hospitalList}>
           {hospitals.map(hospital => (
             <HospitalCard key={hospital.id} hospital={hospital} />
           ))}
         </ScrollView>
 
         {/* Top Doctors */}
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-            color: '#125873',
-            marginTop: 40,
-            marginBottom: 20,
-          }}>
-          Top Doctors
-        </Text>
+        <Text style={styles.sectionTitle}>Top Doctors</Text>
         {doctors.map(doctor => (
           <DoctorCard key={doctor.id} doctor={doctor} />
         ))}
@@ -265,33 +196,135 @@ const Home = () => {
   );
 };
 
-const ServiceCard = ({title, icon, onPress}) => (
-  <Pressable onPress={onPress} style={{width: '48%'}}>
+const ServiceCard = ({ title, icon, onPress }) => (
+  <Pressable onPress={onPress} style={styles.serviceCard}>
     <LinearGradient
       colors={['#ffffff', '#e6f7ff']}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 1}}
-      style={{
-        borderRadius: 15,
-        padding: 20,
-        height: 120,
-        justifyContent: 'center',
-        alignItems: 'center',
-        elevation: 5,
-      }}>
-      <Icon name={icon} size={50} color="#125873" />
-      <Text
-        style={{
-          marginTop: 5,
-          fontSize: 16,
-          fontWeight: 'bold',
-          color: '#125873',
-          textAlign: 'center',
-        }}>
-        {title}
-      </Text>
+      style={styles.serviceCardGradient}>
+      <Icon name={icon} size={40} color="#125873" />
+      <Text style={styles.serviceCardTitle}>{title}</Text>
     </LinearGradient>
   </Pressable>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f0f4f8',
+  },
+  header: {
+    padding: 20,
+    paddingTop: 40,
+    paddingBottom: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 40,
+    height: 40,
+    tintColor: '#fff',
+  },
+  logoText: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  headerIcons: {
+    flexDirection: 'row',
+  },
+  iconButton: {
+    marginLeft: 20,
+  },
+  searchBar: {
+    borderRadius: 30,
+    backgroundColor: '#fff',
+    elevation: 5,
+  },
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  locationText: {
+    color: '#fff',
+    marginLeft: 5,
+    fontSize: 14,
+  },
+  content: {
+    padding: 20,
+  },
+  banner: {
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 30,
+    elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  bannerContent: {
+    flex: 1,
+  },
+  bannerTitle: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 6,
+  },
+  bannerSubtitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  bannerImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#125873',
+    marginBottom: 20,
+    marginTop : 24,
+  },
+  servicesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    
+  },
+  serviceCard: {
+    width: '48%',
+  },
+  serviceCardGradient: {
+    borderRadius: 15,
+    padding: 20,
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
+  serviceCardTitle: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#125873',
+    textAlign: 'center',
+  },
+  hospitalList: {
+    paddingRight: 2,
+  },
+});
 
 export default Home;

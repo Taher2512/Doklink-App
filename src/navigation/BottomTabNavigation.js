@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/Home';
 import Settings from '../screens/Settings';
 import Profile from '../screens/Profile';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,10 +18,11 @@ export default function BottomTabNavigation() {
   const theme = useTheme();
 
   return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
     <Tab.Navigator
       backBehavior="history"
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerStyle: {
           backgroundColor: theme.colors.secondary,
           elevation: 0,
@@ -64,6 +66,7 @@ export default function BottomTabNavigation() {
         }}
       />
     </Tab.Navigator>
+    </SafeAreaView>
   );
 }
 
