@@ -14,9 +14,8 @@ import SignIn from '../screens/SignIn';
 import Onboarding from '../screens/Onboarding';
 import Home from '../screens/Home';
 import BedBooking from '../screens/BedBooking';
-import DoctorAppointment from '../screens/DoctorAppointment';
+import DoctorBooking from '../screens/DoctorBooking';
 import HospitalInfo from '../screens/HospitalInfo';
-
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
@@ -54,8 +53,10 @@ const StackNavigation = () => {
           name="BottomTabNavigation"
           component={BottomTabNavigation}
         />
-        <Stack.Screen name="OtpVerification" component={OtpVerification} />
-        <Stack.Screen name="DoctorAppointment" component={DoctorAppointment} />
+        <Stack.Screen name="otpVerification" component={OtpVerification} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="DoctorBooking" component={DoctorBooking} />
+        <Stack.Screen name="BedBooking" component={BedBooking} />
       </Stack.Navigator>
     </NavigationContainer>
   );

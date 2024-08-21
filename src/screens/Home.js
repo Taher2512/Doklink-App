@@ -205,7 +205,7 @@ const Home = () => {
         </Text>
         <View className="flex-row justify-around mt-4">
           <Pressable
-            onPress={() => console.log('hi')}
+            onPress={() => navigation.navigate('BedBooking')}
             className="justify-center items-center">
             <LinearGradient
               colors={['#d9f7f7', '#d9f7f7']}
@@ -254,7 +254,7 @@ const Home = () => {
             </LinearGradient>
           </Pressable>
           <Pressable
-            onPress={() => navigation.navigate('DoctorAppointment')}
+            onPress={() => navigation.navigate('DoctorBooking')}
             className="justify-center items-center">
             <LinearGradient
               colors={['#d9f7f7', '#d9f7f7']}
