@@ -8,10 +8,14 @@ import {
   View,
 } from 'react-native';
 import {Text, useTheme} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
+
 const {width} = Dimensions.get('window');
 
 export default function DocAppointVerticalCard() {
   const theme = useTheme();
+  const navigation = useNavigation();
+
   return (
     <View style={{...styles.container}}>
       <View style={{...styles.leftContainer}}>
@@ -65,6 +69,7 @@ export default function DocAppointVerticalCard() {
           </Text>
         </View>
         <TouchableOpacity
+          onPress={() => navigation.navigate('DoctorInfo')}
           style={{
             backgroundColor: theme.colors.secondary,
             padding: 5,

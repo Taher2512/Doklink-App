@@ -9,12 +9,17 @@ import {
   Dimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 export default function DocAppointHorizontalCard({data}) {
   const theme = useTheme();
   const {width} = Dimensions.get('window');
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity style={{...styles.container, width: width * 0.72}}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('DoctorInfo')}
+      style={{...styles.container, width: width * 0.72}}>
       <View style={styles.card}>
         <View style={styles.innercard}>
           <Text

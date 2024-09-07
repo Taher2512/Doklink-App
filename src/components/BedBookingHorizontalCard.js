@@ -18,8 +18,7 @@ export default function BedBookingHorizontalCard({width}) {
     <View style={[style.container, {width}]}>
       <TouchableOpacity
         style={{width: '100%'}}
-        // onPress={() => navigation.navigate('HospitalInfo')}
-      >
+        onPress={() => navigation.navigate('HospitalInfo')}>
         <ImageBackground
           style={[style.image, {width: width - 4}]}
           source={require('../assets/icons/hospital1.jpg')}>
@@ -41,7 +40,7 @@ export default function BedBookingHorizontalCard({width}) {
               4.5 km
             </Text>
           </View>
-          <TouchableOpacity
+          <View
             style={{
               backgroundColor: 'rgba(0,0,0,0.3)',
               borderRadius: 100,
@@ -52,7 +51,7 @@ export default function BedBookingHorizontalCard({width}) {
               style={{height: 22, width: 22, tintColor: 'white'}}
               source={require('../assets/icons/save.png')}
             />
-          </TouchableOpacity>
+          </View>
         </ImageBackground>
         <View
           style={{
