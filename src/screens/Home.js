@@ -1,55 +1,31 @@
-/*eslint-disable*/
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
-  FlatList,
+  ScrollView,
   Image,
   Text,
   Pressable,
   StatusBar,
-  ScrollView,
+  Dimensions,
+  StyleSheet,
 } from 'react-native';
-import {
-  Card,
-  Button,
-  Searchbar,
-  useTheme,
-  IconButton,
-  TouchableRipple,
-} from 'react-native-paper';
-import {sampleHospitals} from '../utils/sampleData';
-import Geolocation from '@react-native-community/geolocation';
+import {Searchbar, useTheme} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
+import DatePicker from 'react-native-date-picker';
 import HospitalCard from '../components/HospitalCard';
 import DoctorCard from '../components/DoctorCard';
-import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const {width} = Dimensions.get('window');
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [nearbyHospitals, setNearbyHospitals] = useState(sampleHospitals);
-  const [currentLocation, setCurrentLocation] = useState('');
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const theme = useTheme();
   const navigation = useNavigation();
-  const handleSearch = () => {
-    // For now, just log the search query
-    // console.log('Searching for:', searchQuery);
-    // In a real app, you would filter the hospitals based on the search query
-  };
-
-  useEffect(() => {
-    // Get current location when component mounts
-    Geolocation.getCurrentPosition(
-      position => {
-        setCurrentLocation(position.coords);
-        console.log('Current location:', position.coords);
-        // fetchNearbyHospitals(position.coords);
-      },
-      error => console.log(error),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-    );
-  }, []);
 
   const doctors = [
     {
@@ -118,221 +94,241 @@ const Home = () => {
   ];
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
-      <View className="p-4">
-        <View className="flex-row justify-between items-center mb-4">
-          <View className="flex-row items-center">
+    <ScrollView style={styles.container}>
+      <StatusBar
+        backgroundColor={theme.colors.secondary}
+        barStyle="light-content"
+      />
+
+      {/* Header */}
+      <LinearGradient colors={['#125873', '#1a7fa0']} style={styles.header}>
+        <View style={styles.headerContent}>
+          <View style={styles.logoContainer}>
             <Image
               source={require('../assets/logos/logo-blue.png')}
-              className="h-16 w-16"
-              tintColor={theme.colors.secondary}
+              style={styles.logo}
             />
-            <Text
-              className="font-bold mb-2 text-2xl"
-              style={{color: theme.colors.secondary}}>
-              DOKLINK
-            </Text>
+            <Text style={styles.logoText}>DOKLINK</Text>
           </View>
-          <View className="flex-row">
-            <IconButton
-              icon="calendar-month"
-              mode="contained"
-              size={23}
-              iconColor={theme.colors.secondary}
-              containerColor={theme.colors.tertiary}
-              style={{
-                borderWidth: 1,
-                borderColor: theme.colors.secondary,
-              }}
-              onPress={() => console.log('Pressed')}
-            />
-            <IconButton
-              icon="bell-ring"
-              mode="contained"
-              size={23}
-              iconColor={theme.colors.secondary}
-              containerColor={theme.colors.tertiary}
-              style={{borderWidth: 1, borderColor: theme.colors.secondary}}
-              onPress={() => console.log('Pressed')}
-            />
+          <View style={styles.headerIcons}>
+            <Pressable onPress={() => setOpen(true)} style={styles.iconButton}>
+              <Icon name="calendar-month" size={24} color="#fff" />
+            </Pressable>
+            <Pressable onPress={() => {}} style={styles.iconButton}>
+              <Icon name="bell-ring" size={24} color="#fff" />
+            </Pressable>
           </View>
         </View>
+
         <Searchbar
-          placeholder="Search location"
-          icon={'map-marker-radius'}
+          placeholder="Search doctors, hospitals..."
           onChangeText={setSearchQuery}
           value={searchQuery}
-          onSubmitEditing={handleSearch}
-          cursorColor={theme.colors.secondary}
-          className="mb-2"
-          style={{
-            borderColor: theme.colors.secondary,
-            borderWidth: 2,
-            backgroundColor: theme.colors.tertiary,
-          }}
+          style={styles.searchBar}
+          iconColor="#125873"
         />
-        <Text variant="bodyMedium" className="text-gray-600">
-          {/* Current location:{' '} */}
-          {/* {currentLocation ? currentLocation.latitude.toFixed(4) : 'N/A'},{' '}
-          {currentLocation ? currentLocation.longitude.toFixed(4) : 'N/A'} */}
-          Current location: 123 Main St., Kolkata - 700016
-        </Text>
-        <LinearGradient
-          colors={['#d9f7f7', '#125970', '#125873']}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
-          className="flex-row justify-end items-center w-full h-32 mt-10 rounded-lg"
-          style={{
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 10,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.5,
-            elevation: 15,
-          }}>
+
+        <View style={styles.locationContainer}>
+          <Icon name="map-marker" size={20} color="#fff" />
+          <Text style={styles.locationText}>
+            123 Main St., Kolkata - 700016
+          </Text>
+        </View>
+      </LinearGradient>
+
+      {/* Main Content */}
+      <View style={styles.content}>
+        {/* Banner */}
+        <LinearGradient colors={['#125873', '#1a7fa0']} style={styles.banner}>
+          <View style={styles.bannerContent}>
+            <Text style={styles.bannerTitle}>Your EXCELLENT care</Text>
+            <Text style={styles.bannerSubtitle}>is our SPECIALITY</Text>
+          </View>
           <Image
             source={require('../assets/icons/banner-1.png')}
-            className="absolute left-4 h-36 w-36 -top-4"
+            style={styles.bannerImage}
           />
-          <Text className="text-white w-1/2 font-bold text-lg mr-3 text-left">
-            Your EXCELLENT care{'\n'} is our SPECIALITY
-          </Text>
         </LinearGradient>
-        <Text className="text-[#125873] mt-6 font-bold text-2xl">
-          Our Services
-        </Text>
-        <View className="flex-row justify-around mt-4">
-          <Pressable
+
+        {/* Services */}
+        <Text style={styles.sectionTitle}>Our Services</Text>
+        <View style={styles.servicesContainer}>
+          <ServiceCard
+            title="Bed Booking"
+            icon="bed-empty"
             onPress={() => navigation.navigate('BedBooking')}
-            className="justify-center items-center">
-            <LinearGradient
-              colors={['#d9f7f7', '#d9f7f7']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              className="h-28 w-40 rounded-lg justify-center items-center"
-              style={{
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 10,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.5,
-                elevation: 15,
-                flexDirection: 'row',
-                backgroundColor: '#d9f7f7',
-                justifyContent: 'flex-start',
-                paddingLeft: 10,
-              }}>
-              <View style={{width: '40%', height: '100%', paddingTop: 10}}>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 100,
-                  }}>
-                  Bed
-                </Text>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 100,
-                  }}>
-                  Booking
-                </Text>
-              </View>
-              <Image
-                source={require('../assets/icons/bed-booking-banner.png')}
-                className="h-28 w-28 absolute"
-                style={{resizeMode: 'contain', left: 60, top: 20}}
-              />
-            </LinearGradient>
-          </Pressable>
-          <Pressable
-            onPress={() => navigation.navigate('DoctorBooking')}
-            className="justify-center items-center">
-            <LinearGradient
-              colors={['#d9f7f7', '#d9f7f7']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              className="h-28 w-40 rounded-lg justify-center items-center"
-              style={{
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 10,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.5,
-                elevation: 15,
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                paddingLeft: 10,
-              }}>
-              <View style={{width: '60%', height: '100%', paddingTop: 10}}>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 100,
-                  }}>
-                  Doctor
-                </Text>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    fontSize: 17,
-                    width: 110,
-                  }}>
-                  Appointment
-                </Text>
-              </View>
-              <Image
-                source={require('../assets/icons/doctor-appointment-banner.png')}
-                className="h-28 w-24 absolute"
-                style={{resizeMode: 'contain', left: 95}}
-              />
-            </LinearGradient>
-          </Pressable>
+          />
+          <ServiceCard
+            title="Doctor Appointment"
+            icon="doctor"
+            onPress={() => navigation.navigate('DoctorAppointment')}
+          />
         </View>
 
-        {/* Top Doctors Section */}
-        <View>
-          <Text className="text-2xl font-bold my-6 text-[#125873]">
-            Top Hospitals
-          </Text>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{paddingHorizontal: 16}}>
-            {hospitals.map(item => (
-              <HospitalCard key={item.id} hospital={item} />
-            ))}
-          </ScrollView>
-        </View>
+        {/* Top Hospitals */}
+        <Text style={styles.sectionTitle}>Top Hospitals</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.hospitalList}>
+          {hospitals.map(hospital => (
+            <HospitalCard key={hospital.id} hospital={hospital} />
+          ))}
+        </ScrollView>
 
-        {/* Top Hospitals Section */}
-        <View>
-          <Text className="text-2xl font-bold my-6 text-[#125873]">
-            Top Doctors
-          </Text>
-          <View>
-            {doctors.map(item => (
-              <DoctorCard key={item.id} doctor={item} />
-            ))}
-            <View style={{height: 60}} />
-          </View>
-        </View>
+        {/* Top Doctors */}
+        <Text style={styles.sectionTitle}>Top Doctors</Text>
+        {doctors.map(doctor => (
+          <DoctorCard key={doctor.id} doctor={doctor} />
+        ))}
       </View>
+
+      {/* DatePicker */}
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={date => {
+          setOpen(false);
+          setDate(date);
+          // You can handle the selected date here
+        }}
+        onCancel={() => {
+          setOpen(false);
+        }}
+      />
     </ScrollView>
   );
 };
+
+const ServiceCard = ({title, icon, onPress}) => (
+  <Pressable onPress={onPress} style={styles.serviceCard}>
+    <LinearGradient
+      colors={['#ffffff', '#e6f7ff']}
+      style={styles.serviceCardGradient}>
+      <Icon name={icon} size={40} color="#125873" />
+      <Text style={styles.serviceCardTitle}>{title}</Text>
+    </LinearGradient>
+  </Pressable>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f0f4f8',
+  },
+  header: {
+    padding: 20,
+    paddingTop: 40,
+    paddingBottom: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 40,
+    height: 40,
+    tintColor: '#fff',
+  },
+  logoText: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  headerIcons: {
+    flexDirection: 'row',
+  },
+  iconButton: {
+    marginLeft: 20,
+  },
+  searchBar: {
+    borderRadius: 30,
+    backgroundColor: '#fff',
+    elevation: 5,
+  },
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  locationText: {
+    color: '#fff',
+    marginLeft: 5,
+    fontSize: 14,
+  },
+  content: {
+    padding: 20,
+  },
+  banner: {
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 30,
+    elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  bannerContent: {
+    flex: 1,
+  },
+  bannerTitle: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 6,
+  },
+  bannerSubtitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  bannerImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#125873',
+    marginBottom: 20,
+    marginTop: 24,
+  },
+  servicesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  serviceCard: {
+    width: '48%',
+  },
+  serviceCardGradient: {
+    borderRadius: 15,
+    padding: 20,
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
+  serviceCardTitle: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#125873',
+    textAlign: 'center',
+  },
+  hospitalList: {
+    paddingRight: 2,
+  },
+});
 
 export default Home;

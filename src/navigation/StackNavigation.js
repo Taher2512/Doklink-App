@@ -17,6 +17,10 @@ import BedBooking from '../screens/BedBooking';
 import DoctorBooking from '../screens/DoctorBooking';
 import HospitalInfo from '../screens/HospitalInfo';
 import DoctorInfo from '../screens/DoctorInfo';
+import Profile from '../screens/Profile';
+import EditProfile from '../screens/EditProfile';
+import DoctorAppointment from '../screens/DoctorAppointment';
+
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
@@ -46,6 +50,11 @@ const StackNavigation = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="BedBooking"
+          component={BedBooking}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="HospitalInfo"
           component={HospitalInfo}
           options={{headerShown: false}}
@@ -54,15 +63,15 @@ const StackNavigation = () => {
           name="BottomTabNavigation"
           component={BottomTabNavigation}
         />
-        <Stack.Screen name="otpVerification" component={OtpVerification} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="DoctorBooking" component={DoctorBooking} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="OtpVerification" component={OtpVerification} />
+        <Stack.Screen name="DoctorAppointment" component={DoctorAppointment} />
         <Stack.Screen
           name="DoctorInfo"
           component={DoctorInfo}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="BedBooking" component={BedBooking} />
       </Stack.Navigator>
     </NavigationContainer>
   );
