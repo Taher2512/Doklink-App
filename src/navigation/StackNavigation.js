@@ -33,7 +33,7 @@ const StackNavigation = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         })}
-        initialRouteName={'BottomTabNavigation'}>
+        initialRouteName={'Onboarding'}>
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}

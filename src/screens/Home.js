@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {useState} from 'react';
 import {
   View,
@@ -68,6 +69,9 @@ const Home = () => {
 
   const hospitals = [
     {
+      id:'left-spacer'
+    },
+    {
       id: '1',
       name: 'AMRI HOSPITAL',
       distance: '1.1',
@@ -91,6 +95,9 @@ const Home = () => {
       reviewCount: 150,
       image: require('../assets/icons/hospital.jpeg'),
     },
+    {
+      id:'right-spacer'
+    }
   ];
 
   return (
@@ -167,22 +174,30 @@ const Home = () => {
 
         {/* Top Hospitals */}
         <Text style={styles.sectionTitle}>Top Hospitals</Text>
-        <ScrollView
+      </View>
+      <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.hospitalList}>
-          {hospitals.map(hospital => (
+          {hospitals.map(hospital => {
+            if(hospital.id === 'left-spacer' || hospital.id === 'right-spacer'){
+              return <View key={hospital.id} style={{width: 20}} />
+              }
+            return(
             <HospitalCard key={hospital.id} hospital={hospital} />
-          ))}
+          )})}
         </ScrollView>
 
         {/* Top Doctors */}
+        
+        <View style={styles.content}>
         <Text style={styles.sectionTitle}>Top Doctors</Text>
         {doctors.map(doctor => (
           <DoctorCard key={doctor.id} doctor={doctor} />
         ))}
-      </View>
-
+        </View>
+        
+       <View style={{height:70}}></View>
       {/* DatePicker */}
       <DatePicker
         modal
@@ -272,7 +287,7 @@ const styles = StyleSheet.create({
   banner: {
     borderRadius: 15,
     padding: 20,
-    marginBottom: 30,
+    marginBottom: 0,
     elevation: 5,
     flexDirection: 'row',
     alignItems: 'center',
@@ -301,8 +316,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#125873',
-    marginBottom: 20,
-    marginTop: 24,
+    marginBottom: 15,
+    marginTop: 10,
   },
   servicesContainer: {
     flexDirection: 'row',
@@ -327,7 +342,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   hospitalList: {
-    paddingRight: 2,
+    // paddingRight: 2,
   },
 });
 

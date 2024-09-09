@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
