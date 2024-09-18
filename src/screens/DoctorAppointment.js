@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import {Link} from '@react-navigation/native';
+import {Link, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   StatusBar,
@@ -11,14 +11,18 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {Searchbar, useTheme} from 'react-native-paper';
+import {Icon, Searchbar, useTheme} from 'react-native-paper';
 import DocAppointHorizontalCard from '../components/DocAppointHorizontalCard';
 import DocAppointVerticalCard from '../components/DocAppointVerticalCard';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function DoctorAppointment() {
   const [searchquery, setsearchquery] = useState('');
-  const theme = useTheme();
+
   const colors = ['#f77777', '#ecdca2', '#8bcaee', '#a9f47b'];
+  const theme = useTheme();
+  const navigation = useNavigation();
+
   const handleSearch = () => {
     console.log('Searching for:', searchquery);
   };
@@ -125,6 +129,23 @@ export default function DoctorAppointment() {
               }}
             />
           </View>
+          {/* Banner */}
+          <TouchableOpacity
+            className="w-full"
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('EmergencyAppointment')}>
+            <LinearGradient
+              colors={['#4b0082', '#8a2be2']}
+              style={style.banner}>
+              <View style={style.bannerContent}>
+                <Text style={style.bannerTitle}>EMERGENCY APPOINTMENT</Text>
+              </View>
+              <View className="absolute right-4">
+                <Icon source="clock-fast" color="#fff" size={130} />
+              </View>
+              <View style={style.bannerImage}></View>
+            </LinearGradient>
+          </TouchableOpacity>
           <View
             style={{
               width: '100%',
@@ -146,7 +167,6 @@ export default function DoctorAppointment() {
               </Text>
             </Link>
           </View>
-
           <View style={{height: 110}}>
             <FlatList
               data={data}
@@ -252,5 +272,32 @@ const style = StyleSheet.create({
   cardtext: {
     color: 'white',
     fontSize: 20,
+  },
+  banner: {
+    borderRadius: 15,
+    padding: 20,
+    elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  bannerContent: {
+    flex: 1,
+  },
+  bannerTitle: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 6,
+  },
+  bannerSubtitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  bannerImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
   },
 });

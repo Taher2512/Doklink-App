@@ -48,20 +48,6 @@ export default function BottomTabNavigation() {
             ),
           }}
         />
-        {/* <Tab.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            tabBarIcon: ({focused, color, size}) => (
-              <TabBarIcon
-                focused={focused}
-                iconName="settings"
-                color={color}
-                size={size}
-              />
-            ),
-          }}
-        /> */}
         <Tab.Screen
           name="Profile"
           component={Profile}
@@ -108,7 +94,7 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     elevation: 0,
-    backgroundColor: '#B6D0E2',
+    backgroundColor: '#C0D9E7', // A shade lighter than #B6D0E2
     borderRadius: 15,
     height: 70,
     shadowColor: '#000',

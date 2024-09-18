@@ -94,7 +94,9 @@ const Home = () => {
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{paddingBottom: 100}}>
       <StatusBar
         backgroundColor={theme.colors.secondary}
         barStyle="light-content"
@@ -272,7 +274,6 @@ const styles = StyleSheet.create({
   banner: {
     borderRadius: 15,
     padding: 20,
-    marginBottom: 30,
     elevation: 5,
     flexDirection: 'row',
     alignItems: 'center',

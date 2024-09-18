@@ -20,6 +20,8 @@ import DoctorInfo from '../screens/DoctorInfo';
 import Profile from '../screens/Profile';
 import EditProfile from '../screens/EditProfile';
 import DoctorAppointment from '../screens/DoctorAppointment';
+import EmergencyAppointment from '../screens/EmergencyAppointment';
+import EmergencyDoctorInfo from '../screens/EmergencyDoctorInfo';
 
 const Stack = createStackNavigator();
 
@@ -60,6 +62,21 @@ const StackNavigation = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="DoctorInfo"
+          component={DoctorInfo}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="EmergencyAppointment"
+          component={EmergencyAppointment}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="EmergencyDoctorInfo"
+          component={EmergencyDoctorInfo}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="BottomTabNavigation"
           component={BottomTabNavigation}
         />
@@ -67,11 +84,6 @@ const StackNavigation = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="OtpVerification" component={OtpVerification} />
         <Stack.Screen name="DoctorAppointment" component={DoctorAppointment} />
-        <Stack.Screen
-          name="DoctorInfo"
-          component={DoctorInfo}
-          options={{headerShown: false}}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
