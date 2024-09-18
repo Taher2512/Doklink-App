@@ -48,7 +48,7 @@ export default function BottomTabNavigation() {
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Settings"
           component={Settings}
           options={{
@@ -61,7 +61,7 @@ export default function BottomTabNavigation() {
               />
             ),
           }}
-        />
+        /> */}
         <Tab.Screen
           name="Profile"
           component={Profile}

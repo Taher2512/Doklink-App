@@ -17,6 +17,7 @@ import {
 import DateSelector from '../components/DateSelector';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ReviewCard from '../components/ReviewCard';
 
 const HospitalInfo = () => {
   const theme = useTheme();
@@ -27,6 +28,12 @@ const HospitalInfo = () => {
   const [birthDate, setBirthDate] = useState('');
   const [useUserInfo, setUseUserInfo] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [savedPeople, setSavedPeople] = useState([
+    {id: 1, name: 'John Doe'},
+    {id: 2, name: 'Jane Smith'},
+    {id: 3, name: 'Mike Johnson'},
+  ]);
+  const [selectedPerson, setSelectedPerson] = useState(null);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -45,6 +52,38 @@ const HospitalInfo = () => {
       'Pediatrics',
       'Neurology',
     ],
+    bedTypes: [
+      {type: 'General', available: Math.floor(Math.random() * 50) + 1},
+      {type: 'Isolation', available: Math.floor(Math.random() * 20) + 1},
+      {type: 'ICU', available: Math.floor(Math.random() * 10) + 1},
+      {type: 'Emergency', available: Math.floor(Math.random() * 15) + 1},
+    ],
+    reviews: [
+      {
+        name: 'John Doe',
+        date: 'May 15, 2023',
+        rating: 5,
+        comment:
+          'Dr. Smith is an excellent cardiologist. She took the time to explain everything thoroughly and made me feel at ease.',
+        profilePic: 'https://randomuser.me/api/portraits/men/1.jpg',
+      },
+      {
+        name: 'Sarah Johnson',
+        date: 'April 22, 2023',
+        rating: 4.5,
+        comment:
+          'Very knowledgeable and professional. The wait time was a bit long, but the care I received was worth it.',
+        profilePic: 'https://randomuser.me/api/portraits/women/2.jpg',
+      },
+      {
+        name: 'Mike Brown',
+        date: 'June 3, 2023',
+        rating: 5,
+        comment:
+          "Dr. Jane Smith is by far the best cardiologist I've ever seen. Her attention to detail and caring nature are unmatched.",
+        profilePic: 'https://randomuser.me/api/portraits/men/3.jpg',
+      },
+    ],
   };
 
   useEffect(() => {
@@ -52,6 +91,27 @@ const HospitalInfo = () => {
       // fetchUserInfo();
     }
   }, [useUserInfo]);
+
+  useEffect(() => {
+    if (selectedPerson) {
+      // Fetch and set the selected person's information
+      // This is where you would normally fetch the data from AsyncStorage or an API
+      const personInfo = {
+        fullName: savedPeople.find(person => person.id === selectedPerson).name,
+        email: 'example@email.com',
+        mobile: '1234567890',
+        birthDate: new Date('1990-01-01'),
+      };
+      setFullName(personInfo.fullName);
+      setEmail(personInfo.email);
+      setMobile(personInfo.mobile);
+      setBirthDate(personInfo.birthDate);
+    }
+  }, [selectedPerson]);
+
+  const handlePersonSelection = id => {
+    setSelectedPerson(selectedPerson === id ? null : id);
+  };
 
   const fetchUserInfo = async () => {
     try {
@@ -135,11 +195,20 @@ const HospitalInfo = () => {
               123 Main St. Kolkata - 700015
             </Text>
           </View>
-          <View className="flex-row items-center mb-6">
-            <Icon source={'bed'} size={16} color="#475569" />
-            <Text className="text-slate-600 font-bold ml-1">
-              54 Beds Available
-            </Text>
+          <View className="flex-row items-center justify-between mb-6">
+            {hospital.bedTypes.map((bed, index) => (
+              <View key={index} className="items-center">
+                <Text className="text-sm font-bold text-slate-700">
+                  {bed.type}
+                </Text>
+                <View className="flex-row items-center mt-1">
+                  <Icon source="bed" size={16} color={theme.colors.secondary} />
+                  <Text className="ml-1 text-slate-600 font-bold">
+                    {bed.available}
+                  </Text>
+                </View>
+              </View>
+            ))}
           </View>
           <Text className="text-lg font-bold mb-2 text-black">About:</Text>
           <Text
@@ -160,6 +229,12 @@ const HospitalInfo = () => {
               </Chip>
             ))}
           </View>
+          <Text className="text-lg font-bold mt-6 mb-2 text-black">
+            Patient Reviews:
+          </Text>
+          {hospital.reviews.map((review, index) => (
+            <ReviewCard key={index} {...review} />
+          ))}
         </View>
       </ScrollView>
       <View className={'w-full h-28 items-center justify-center'}>
@@ -184,6 +259,19 @@ const HospitalInfo = () => {
             borderRadius: 10,
           }}>
           <Text className="text-2xl font-bold mb-4 text-black">Book a Bed</Text>
+          <Text className="text-lg font-bold mb-2 text-black">
+            Select Saved Person:
+          </Text>
+          {savedPeople.map(person => (
+            <View key={person.id} className="flex-row items-center mb-2">
+              <Checkbox
+                status={selectedPerson === person.id ? 'checked' : 'unchecked'}
+                onPress={() => handlePersonSelection(person.id)}
+                color={theme.colors.secondary}
+              />
+              <Text className="ml-2 text-black">{person.name}</Text>
+            </View>
+          ))}
           <TextInput
             mode="flat"
             label="Full Name"
