@@ -22,6 +22,8 @@ import {Link, useNavigation} from '@react-navigation/native';
 import FourDigitVerification from '../components/FourDigitVerification';
 import firestore from '@react-native-firebase/firestore';
 import ShowMessage from '../components/dialogBox/ShowMessage';
+import {useDispatch} from 'react-redux';
+import {setEmail} from '../store/userSlice';
 const formatNumber = number => `0${number}`.slice(-2);
 const getRemaining = time => {
   const mins = Math.floor(time / 60);
@@ -36,6 +38,7 @@ export default function OtpVerification({navigation, route}) {
   const [isActive, setIsActive] = useState(true);
 
   const theme = useTheme();
+  const dispatch = useDispatch();
   const dimension = Dimensions.get('window');
   const {mins, secs} = getRemaining(remainingSecs);
   const visibleHeight = dimension.width / Math.sqrt(2);
@@ -82,9 +85,27 @@ export default function OtpVerification({navigation, route}) {
                       date: Date.now(),
                     });
                   }
-                  setloading(false);
-                  setRemainingSecs(0);
-                  navigation.navigate('Register', {email: route.params.email});
+                });
+              firestore()
+                .collection('userdetail')
+                .where('email', '==', route.params.email)
+                .get()
+                .then(snapshot => {
+                  if (snapshot.docs.length == 0) {
+                    setloading(false);
+                    setRemainingSecs(0);
+                    navigation.navigate('Register', {
+                      email: route.params.email,
+                    });
+                  } else {
+                    setloading(false);
+                    setRemainingSecs(0);
+                    dispatch(setEmail(route.params.email));
+                    navigation.reset({
+                      index: 0,
+                      routes: [{name: 'BottomTabNavigation'}],
+                    });
+                  }
                 });
             }
           } else {
@@ -204,6 +225,7 @@ export default function OtpVerification({navigation, route}) {
                 </View>
               </View>
               <TouchableOpacity
+                activeOpacity={0.8}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',

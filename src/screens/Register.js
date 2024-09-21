@@ -20,6 +20,8 @@ import {City, Country, State} from 'country-state-city';
 import DateSelector from '../components/DateSelector';
 import firestore from '@react-native-firebase/firestore';
 import ShowMessage from '../components/dialogBox/ShowMessage';
+import {setEmail} from '../store/userSlice';
+import {useDispatch} from 'react-redux';
 
 const SignUpPage = ({navigation, route}) => {
   const [fullName, setFullName] = useState('');
@@ -49,6 +51,7 @@ const SignUpPage = ({navigation, route}) => {
   const [birthDate, setBirthDate] = useState('');
 
   const theme = useTheme();
+  const dispatch = useDispatch();
   const {email} = route.params;
 
   useEffect(() => {
@@ -150,7 +153,7 @@ const SignUpPage = ({navigation, route}) => {
           dob: birthDate,
         });
         setLoading(false);
-        console.log('User details added successfully');
+        dispatch(setEmail(email));
         navigation.reset({
           index: 0,
           routes: [{name: 'BottomTabNavigation'}],

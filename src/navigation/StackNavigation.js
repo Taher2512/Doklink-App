@@ -5,7 +5,6 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {useTheme} from 'react-native-paper';
 import Register from '../screens/Register';
 import Login from '../screens/Login';
 import BottomTabNavigation from './BottomTabNavigation';
@@ -22,11 +21,12 @@ import EditProfile from '../screens/EditProfile';
 import DoctorAppointment from '../screens/DoctorAppointment';
 import EmergencyAppointment from '../screens/EmergencyAppointment';
 import EmergencyDoctorInfo from '../screens/EmergencyDoctorInfo';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
-  const theme = useTheme();
+  const email = useSelector(state => state.user.email);
 
   return (
     <NavigationContainer>
@@ -35,7 +35,7 @@ const StackNavigation = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         })}
-        initialRouteName={'BottomTabNavigation'}>
+        initialRouteName={email ? 'BottomTabNavigation' : 'Onboarding'}>
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}

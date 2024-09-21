@@ -4,6 +4,9 @@ import {StatusBar, StyleSheet, View} from 'react-native';
 import Navigation from './src/navigation';
 import BottomTabNavigation from './src/navigation/BottomTabNavigation';
 import {NavigationContainer} from '@react-navigation/native';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistor, store} from './src/store';
 
 function App() {
   return (
@@ -13,7 +16,11 @@ function App() {
         backgroundColor="transparent"
         translucent
       />
-      <Navigation />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Navigation />
+        </PersistGate>
+      </Provider>
     </View>
   );
 }

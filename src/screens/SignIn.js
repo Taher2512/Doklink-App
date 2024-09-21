@@ -187,7 +187,7 @@ export default function SignIn() {
                 textColor="black"
                 placeholderTextColor={'black'}
                 value={email}
-                onChangeText={text => setEmail(text)}
+                onChangeText={text => setEmail(text.toLowerCase())}
               />
               <View
                 style={{

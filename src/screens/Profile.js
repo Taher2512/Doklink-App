@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import ShowMessage from '../components/dialogBox/ShowMessage';
+import {logout} from '../store/userSlice';
+import {useDispatch} from 'react-redux';
 
 const sampleUserData = {
   id: 'user123',
@@ -53,6 +55,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
 
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // const fetchUserData = async () => {
@@ -233,10 +236,10 @@ const Profile = () => {
             <Button
               mode="contained"
               onPress={() => navigation.navigate('BookAppointment')}
-              className="mb-2"
               contentStyle={{paddingVertical: 8}}
               labelStyle={{fontSize: 16, color: 'white', fontWeight: 'bold'}}
-              style={{backgroundColor: theme.colors.secondary}}>
+              style={{backgroundColor: theme.colors.secondary}}
+              className="mb-2">
               Book New Appointment
             </Button>
             <Button
@@ -249,8 +252,23 @@ const Profile = () => {
                 fontWeight: 'bold',
               }}
               style={{borderColor: theme.colors.secondary}}
-              className="bg-white border-2">
+              className="bg-white border-2 mb-2">
               View Medical History
+            </Button>
+            <Button
+              mode="contained"
+              onPress={() => {
+                dispatch(logout());
+                navigation.reset({
+                  index: 0,
+                  routes: [{name: 'SignIn'}],
+                });
+              }}
+              contentStyle={{paddingVertical: 8}}
+              labelStyle={{fontSize: 16, color: 'white', fontWeight: 'bold'}}
+              style={{backgroundColor: '#b22222'}}
+              className="mb-2">
+              Logout
             </Button>
           </View>
         </View>
