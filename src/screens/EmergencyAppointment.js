@@ -62,15 +62,11 @@ const EmergencyAppointment = () => {
         style={styles.doctorImage}
       />
       <View style={styles.doctorInfo}>
-        <Text style={[styles.doctorName, {color: theme.colors.text}]}>
-          {item.name}
-        </Text>
-        <Text
-          style={[styles.doctorSpecialty, {color: theme.colors.placeholder}]}>
+        <Text style={[styles.doctorName, {color: '#777'}]}>{item.name}</Text>
+        <Text style={[styles.doctorSpecialty, {color: '#777'}]}>
           {item.specialty}
         </Text>
-        <Text
-          style={[styles.doctorDistance, {color: theme.colors.placeholder}]}>
+        <Text style={[styles.doctorDistance, {color: '#777'}]}>
           {item.distance}
         </Text>
       </View>
@@ -110,7 +106,7 @@ const EmergencyAppointment = () => {
         />
       </View>
       <View style={styles.content}>
-        <Text style={[styles.sectionTitle, {color: theme.colors.text}]}>
+        <Text style={[styles.sectionTitle, {color: '#777'}]}>
           Nearby Emergency Doctors
         </Text>
         <FlatList

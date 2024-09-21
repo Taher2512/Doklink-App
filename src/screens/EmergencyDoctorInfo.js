@@ -277,7 +277,9 @@ const EmergencyDoctorInfo = () => {
           <Text className="text-xl font-bold mb-4 text-black">
             Book Emergency Appointment
           </Text>
-          <Text className="text-base font-bold mb-2">Select Saved Person:</Text>
+          <Text className="text-base font-bold mb-2 text-[#777]">
+            Select Saved Person:
+          </Text>
           {savedPeople.map(person => (
             <View key={person.id} className="flex-row items-center mb-2">
               <Checkbox
