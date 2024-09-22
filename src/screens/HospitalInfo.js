@@ -201,7 +201,7 @@ const HospitalInfo = () => {
           <View className="flex-row items-center justify-between mb-6">
             {hospital.bedTypes.map((bed, index) => (
               <View key={index} className="items-center">
-                <Text className="text-sm font-bold text-slate-700 text-base">
+                <Text className="text-base font-bold text-slate-700">
                   {bed.type}
                 </Text>
                 <View className="flex-row items-center mt-1">
