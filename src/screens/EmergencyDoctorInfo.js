@@ -45,6 +45,7 @@ const EmergencyDoctorInfo = () => {
 
   const doctor = {
     name: 'Dr. Jane Smith',
+    clinicName: 'Smith Cardiology Clinic',
     specialization: 'Cardiologist',
     rating: 4.8,
     experience: '15 years',
@@ -208,6 +209,12 @@ const EmergencyDoctorInfo = () => {
           <Text className="text-lg font-semibold text-slate-600 mb-2">
             {doctor.specialization}
           </Text>
+          <View className="flex-row items-center mb-3">
+            <Icon source={'hospital-building'} size={16} color="#475569" />
+            <Text className="text-slate-600 font-bold ml-1">
+              {doctor.clinicName}
+            </Text>
+          </View>
           <View className="flex-row items-center mb-3">
             <Icon source={'map-marker'} size={16} color="#475569" />
             <Text className="text-slate-600 font-bold ml-1">

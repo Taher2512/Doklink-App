@@ -44,6 +44,7 @@ const DoctorInfo = () => {
 
   const doctor = {
     name: 'Dr. Jane Smith',
+    clinicName: 'Smith Cardiology Clinic',
     specialization: 'Cardiologist',
     rating: 4.8,
     experience: '15 years',
@@ -204,6 +205,12 @@ const DoctorInfo = () => {
             {doctor.specialization}
           </Text>
           <View className="flex-row items-center mb-3">
+            <Icon source={'hospital-building'} size={16} color="#475569" />
+            <Text className="text-slate-600 font-bold ml-1">
+              {doctor.clinicName}
+            </Text>
+          </View>
+          <View className="flex-row items-center mb-3">
             <Icon source={'map-marker'} size={16} color="#475569" />
             <Text className="text-slate-600 font-bold ml-1">
               123 Main St. Kolkata - 700015
@@ -255,6 +262,17 @@ const DoctorInfo = () => {
                 <Text className="text-slate-600 ml-2 text-xs">{time}</Text>
               </View>
             ))}
+          </View>
+          <View className="flex-col mb-3 flex-wrap">
+            <Text className="text-slate-600 font-bold ml-1">
+              {doctor.clinicName}
+            </Text>
+            <View className="flex-row items-center">
+              <Icon source={'map-marker'} size={16} color="#475569" />
+              <Text className="text-slate-600 font-bold ml-1">
+                123 Main St. Kolkata - 700015
+              </Text>
+            </View>
           </View>
           <Text className="text-lg font-bold mt-6 mb-2 text-black">
             Patient Reviews:

@@ -189,21 +189,24 @@ const HospitalInfo = () => {
               <Text className="text-white font-semibold text-xs">Open</Text>
             </View>
           </View>
-          <View className="flex-row items-center mb-3">
+          <View className="flex-row items-center mb-6">
             <Icon source={'map-marker'} size={16} color="#475569" />
             <Text className="text-slate-600 font-bold ml-1">
               123 Main St. Kolkata - 700015
             </Text>
           </View>
+          <Text className="text-lg font-bold mb-2 text-black">
+            Available Beds:
+          </Text>
           <View className="flex-row items-center justify-between mb-6">
             {hospital.bedTypes.map((bed, index) => (
               <View key={index} className="items-center">
-                <Text className="text-sm font-bold text-slate-700">
+                <Text className="text-sm font-bold text-slate-700 text-base">
                   {bed.type}
                 </Text>
                 <View className="flex-row items-center mt-1">
-                  <Icon source="bed" size={16} color={theme.colors.secondary} />
-                  <Text className="ml-1 text-slate-600 font-bold">
+                  <Icon source="bed" size={20} color={theme.colors.secondary} />
+                  <Text className="ml-1 text-slate-600 font-bold text-base">
                     {bed.available}
                   </Text>
                 </View>
