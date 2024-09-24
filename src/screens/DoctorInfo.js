@@ -1,5 +1,12 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {View, Text, ScrollView, Image, StatusBar} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StatusBar,
+  Dimensions,
+} from 'react-native';
 import {
   Card,
   Title,
@@ -42,9 +49,11 @@ const DoctorInfo = () => {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
+  const windowHeight = Dimensions.get('window').height;
+  const modalHeight = windowHeight * 0.8;
+
   const doctor = {
     name: 'Dr. Jane Smith',
-    clinicName: 'Smith Cardiology Clinic',
     specialization: 'Cardiologist',
     rating: 4.8,
     experience: '15 years',
@@ -52,11 +61,31 @@ const DoctorInfo = () => {
       'Dr. Jane Smith is a highly skilled cardiologist with extensive experience in treating various heart conditions. She is known for her compassionate care and innovative approach to cardiac health.',
     languages: ['English', 'Spanish', 'French'],
     education: 'MD from Harvard Medical School',
-    location: '123 Medical Center Ave, New York, NY 10001',
     availableDays: [
-      {day: 'Monday', time: '9:00 AM - 1:00 PM'},
-      {day: 'Wednesday', time: '2:00 PM - 6:00 PM'},
-      {day: 'Friday', time: '10:00 AM - 2:00 PM'},
+      {
+        day: 'Monday',
+        time: '9:00 AM - 1:00 PM',
+        clinic: {
+          name: 'Smith Cardiology Clinic',
+          location: '123 Medical Center Ave, New York, NY 10001',
+        },
+      },
+      {
+        day: 'Wednesday',
+        time: '2:00 PM - 6:00 PM',
+        clinic: {
+          name: 'City Heart Hospital',
+          location: '456 Health Blvd, New York, NY 10002',
+        },
+      },
+      {
+        day: 'Friday',
+        time: '10:00 AM - 2:00 PM',
+        clinic: {
+          name: 'Downtown Medical Center',
+          location: '789 Wellness St, New York, NY 10003',
+        },
+      },
     ],
     reviews: [
       {
@@ -155,7 +184,7 @@ const DoctorInfo = () => {
   const getNextAvailableDates = useMemo(() => {
     const today = new Date();
     return doctor.availableDays
-      .map(({day, time}) => {
+      .map(({day, time, clinic}) => {
         const dayIndex = [
           'Sunday',
           'Monday',
@@ -169,10 +198,16 @@ const DoctorInfo = () => {
         if (isBefore(nextDate, today)) {
           nextDate = addDays(nextDate, 7);
         }
-        return {day, time, date: nextDate};
+        return {day, time, clinic, date: nextDate};
       })
       .sort((a, b) => a.date - b.date);
   }, []);
+
+  useEffect(() => {
+    if (useUserInfo) {
+      fetchUserInfo();
+    }
+  }, [useUserInfo]);
 
   const handleDaySelection = selectedDay => {
     setSelectedDay(selectedDay);
@@ -204,7 +239,7 @@ const DoctorInfo = () => {
           <Text className="text-lg font-semibold text-slate-600 mb-2">
             {doctor.specialization}
           </Text>
-          <View className="flex-row items-center mb-3">
+          {/* <View className="flex-row items-center mb-3">
             <Icon source={'hospital-building'} size={16} color="#475569" />
             <Text className="text-slate-600 font-bold ml-1">
               {doctor.clinicName}
@@ -215,7 +250,7 @@ const DoctorInfo = () => {
             <Text className="text-slate-600 font-bold ml-1">
               123 Main St. Kolkata - 700015
             </Text>
-          </View>
+          </View> */}
           <View className="flex-row items-center mb-3">
             <Icon source={'briefcase'} size={16} color="#475569" />
             <Text className="text-slate-600 font-bold ml-1">
@@ -248,22 +283,28 @@ const DoctorInfo = () => {
             ))}
           </View>
           <Text className="text-lg font-bold mb-2 text-black">
-            Available Days:
+            Available Days and Clinics:
           </Text>
-          <View className="flex-row justify-between">
-            {doctor.availableDays.map(({day, time}, index) => (
-              <View key={index} className="mb-2 items-center justify-center">
+          {getNextAvailableDates.map(({day, time, clinic, date}, index) => (
+            <View key={index} className="mb-4">
+              <View className="flex-row items-center justify-between mb-1">
                 <Chip
-                  key={index}
                   textStyle={{color: '#fff', textAlign: 'center'}}
-                  className={`mb-2 bg-[${theme.colors.secondary}]`}>
+                  className={`bg-[${theme.colors.secondary}]`}>
                   {day}
                 </Chip>
-                <Text className="text-slate-600 ml-2 text-xs">{time}</Text>
+                <Text className="text-slate-600 text-xs">{time}</Text>
               </View>
-            ))}
-          </View>
-          <View className="flex-col mb-3 flex-wrap">
+              <View className="ml-2">
+                <Text className="text-slate-600 font-bold">{clinic.name}</Text>
+                <View className="flex-row items-center">
+                  <Icon source={'map-marker'} size={16} color="#475569" />
+                  <Text className="text-slate-600 ml-1">{clinic.location}</Text>
+                </View>
+              </View>
+            </View>
+          ))}
+          {/* <View className="flex-col mb-3 flex-wrap">
             <Text className="text-slate-600 font-bold ml-1">
               {doctor.clinicName}
             </Text>
@@ -273,7 +314,7 @@ const DoctorInfo = () => {
                 123 Main St. Kolkata - 700015
               </Text>
             </View>
-          </View>
+          </View> */}
           <Text className="text-lg font-bold mt-6 mb-2 text-black">
             Patient Reviews:
           </Text>
@@ -282,7 +323,7 @@ const DoctorInfo = () => {
           ))}
         </View>
       </ScrollView>
-      <View className={'w-full h-28 items-center justify-center'}>
+      <View className="w-full h-28 items-center justify-center">
         <Button
           icon="calendar"
           mode="contained"
@@ -293,6 +334,7 @@ const DoctorInfo = () => {
           Book Appointment
         </Button>
       </View>
+
       <Portal>
         <Modal
           visible={visible}
@@ -302,78 +344,88 @@ const DoctorInfo = () => {
             padding: 20,
             margin: 20,
             borderRadius: 10,
+            height: modalHeight,
           }}>
-          <Text className="text-2xl font-bold mb-4 text-black">
-            Book Appointment
-          </Text>
-          <Text className="text-lg font-bold mb-2 text-black">
-            Select Saved Person:
-          </Text>
-          {savedPeople.map(person => (
-            <View key={person.id} className="flex-row items-center mb-2">
-              <Checkbox
-                status={selectedPerson === person.id ? 'checked' : 'unchecked'}
-                onPress={() => handlePersonSelection(person.id)}
-                color={theme.colors.secondary}
-              />
-              <Text className="ml-2 text-black">{person.name}</Text>
-            </View>
-          ))}
-          <TextInput
-            mode="flat"
-            label="Full Name"
-            value={fullName}
-            onChangeText={setFullName}
-            theme={{colors: {primary: theme.colors.secondary}}}
-            className="bg-slate-100 rounded-lg text-gray-300 mb-4"
-          />
-          <TextInput
-            mode="flat"
-            label="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            theme={{colors: {primary: theme.colors.secondary}}}
-            className="bg-slate-100 rounded-lg text-gray-300 mb-4"
-          />
-          <TextInput
-            mode="flat"
-            label="Mobile No."
-            value={mobile}
-            onChangeText={setMobile}
-            keyboardType="phone-pad"
-            theme={{colors: {primary: theme.colors.secondary}}}
-            className="bg-slate-100 rounded-lg text-gray-300 mb-4"
-          />
-          <Text className="text-lg font-bold mb-2 text-black">
-            Select Appointment Day:
-          </Text>
-          <RadioButton.Group
-            onValueChange={handleDaySelection}
-            value={selectedDay}>
-            {getNextAvailableDates.map(({day, time, date}) => (
-              <View key={day} className="flex-row items-center mb-2">
-                <RadioButton value={day} color={theme.colors.secondary} />
-                <View className="ml-2">
-                  <Text>{`${day} (${format(date, 'MMM d, yyyy')})`}</Text>
-                  <Text className="text-slate-600">{time}</Text>
-                </View>
+          <ScrollView style={{flex: 1}}>
+            <Text className="text-2xl font-bold mb-4 text-black">
+              Book Appointment
+            </Text>
+            <Text className="text-lg font-bold mb-2 text-black">
+              Select Saved Person:
+            </Text>
+            {savedPeople.map(person => (
+              <View key={person.id} className="flex-row items-center mb-2">
+                <Checkbox
+                  status={
+                    selectedPerson === person.id ? 'checked' : 'unchecked'
+                  }
+                  onPress={() => handlePersonSelection(person.id)}
+                  color={theme.colors.secondary}
+                />
+                <Text className="ml-2 text-black">{person.name}</Text>
               </View>
             ))}
-          </RadioButton.Group>
-          {appointmentDate && (
-            <Text className="mt-2 text-black">
-              Selected Date: {format(new Date(appointmentDate), 'MMMM d, yyyy')}
-            </Text>
-          )}
-          <View className="flex-row items-center mt-4">
-            <Checkbox
-              status={useUserInfo ? 'checked' : 'unchecked'}
-              onPress={() => setUseUserInfo(!useUserInfo)}
-              color={theme.colors.secondary}
+            <TextInput
+              mode="flat"
+              label="Full Name"
+              value={fullName}
+              onChangeText={setFullName}
+              theme={{colors: {primary: theme.colors.secondary}}}
+              className="bg-slate-100 rounded-lg text-gray-300 mb-4"
             />
-            <Text className="ml-2 text-black">Use my information</Text>
-          </View>
+            <TextInput
+              mode="flat"
+              label="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              theme={{colors: {primary: theme.colors.secondary}}}
+              className="bg-slate-100 rounded-lg text-gray-300 mb-4"
+            />
+            <TextInput
+              mode="flat"
+              label="Mobile No."
+              value={mobile}
+              onChangeText={setMobile}
+              keyboardType="phone-pad"
+              theme={{colors: {primary: theme.colors.secondary}}}
+              className="bg-slate-100 rounded-lg text-gray-300 mb-4"
+            />
+            <Text className="text-lg font-bold mb-2 text-black">
+              Select Appointment Day and Clinic:
+            </Text>
+            <RadioButton.Group
+              onValueChange={handleDaySelection}
+              value={selectedDay}>
+              {getNextAvailableDates.map(({day, time, clinic, date}) => (
+                <View key={day} className="flex-row items-center mb-4">
+                  <RadioButton value={day} color={theme.colors.secondary} />
+                  <View className="ml-2 flex-1">
+                    <Text>{`${day} (${format(date, 'MMM d, yyyy')})`}</Text>
+                    <Text className="text-slate-600">{time}</Text>
+                    <Text className="text-slate-600 font-bold">
+                      {clinic.name}
+                    </Text>
+                    <Text className="text-slate-600">{clinic.location}</Text>
+                  </View>
+                </View>
+              ))}
+            </RadioButton.Group>
+            {appointmentDate && (
+              <Text className="mt-2 text-black">
+                Selected Date:{' '}
+                {format(new Date(appointmentDate), 'MMMM d, yyyy')}
+              </Text>
+            )}
+            <View className="flex-row items-center mt-4">
+              <Checkbox
+                status={useUserInfo ? 'checked' : 'unchecked'}
+                onPress={() => setUseUserInfo(!useUserInfo)}
+                color={theme.colors.secondary}
+              />
+              <Text className="ml-2 text-black">Use my information</Text>
+            </View>
+          </ScrollView>
           <Button
             mode="contained"
             onPress={handleBookAppointment}
